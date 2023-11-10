@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import model.ModelDatabase;
+import repo.DatabaseConnection;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -60,7 +60,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/res/main_pic_01.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/res/SignUpPage.jpg")));
 //		contentPane.setVisible(true);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,7 +80,7 @@ public class Login extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lbl_main_Picture = new JLabel("");
-		lbl_main_Picture.setIcon(new ImageIcon(Login.class.getResource("/res/login.jpg")));
+		lbl_main_Picture.setIcon(new ImageIcon(Login.class.getResource("/res/123.jpg")));
 		lbl_main_Picture.setBounds(0, 0, 896, 754);
 		panel.add(lbl_main_Picture);
 		
@@ -194,14 +194,14 @@ public class Login extends JFrame {
 				 */
 								try {
 									
-									Connection con= ModelDatabase.createConnection();
+									Connection con= DatabaseConnection.createConnection();
 									Statement stm =con.createStatement();
-									String sql="select * from signup where sname='"+txt_email.getText()+"'and spassword='"+txt_password.getText()+"';";
+									String sql="select * from signup where user_email='"+txt_email.getText()+"'and user_password='"+txt_password.getText()+"';";
 									ResultSet rs=stm.executeQuery(sql);
 									
 									if (rs.next()) {
 										dispose();
-										new HomePage().setVisible(true);
+										new Home().setVisible(true);
 									}
 									else {
 										JOptionPane.showMessageDialog(Login.this,"Username or Password Error..!");

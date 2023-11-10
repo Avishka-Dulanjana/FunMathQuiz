@@ -2,8 +2,6 @@ package controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-//import View.GameGUI;
-import model.Game;
 
 /**
  * Main class where the games are coming from. 
@@ -68,11 +66,17 @@ public class GameEngine {
 	public int getScore() {
 		return score;
 	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	
-//P.C.Eranda guide me and help me to add this level up method for the game.
+// Game level up
 	public int getLevel() {
 		// returning the value of level
 		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	
 }

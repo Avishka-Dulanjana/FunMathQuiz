@@ -1,9 +1,9 @@
-package model;
+package repo;
 import java.sql.*;
 import java.sql.DriverManager;
 
 
-public class ModelDatabase {
+public class DatabaseConnection {
 	
 	
 	public static Connection createConnection() throws Exception{

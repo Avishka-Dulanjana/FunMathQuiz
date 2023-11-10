@@ -49,7 +49,7 @@ public class EndGame extends JFrame {
 	 * Create the frame.
 	 */
 	public EndGame() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(EndGame.class.getResource("/res/main_pic_01.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EndGame.class.getResource("/res/SignUpPage.jpg")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1321, 768);
 		setUndecorated(true);
@@ -61,10 +61,10 @@ public class EndGame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Try Again");
+		JButton btnNewButton = new JButton("PLAY AGAIN");
 		btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnNewButton.setDisplayedMnemonicIndex(0);
-		btnNewButton.setBorder(new LineBorder(new Color(255, 0, 128), 2, true));
+		btnNewButton.setBorder(null);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new GameGUI().setVisible(true);
@@ -97,16 +97,16 @@ public class EndGame extends JFrame {
 		});
 		
 		
-		btnNewButton.setBackground(new Color(240, 230, 140));
-		btnNewButton.setForeground(new Color(255, 0, 0));
-		btnNewButton.setFont(new Font("Nirmala UI", Font.BOLD, 20));
-		btnNewButton.setBounds(590, 639, 163, 40);
+		btnNewButton.setBackground(new Color(255, 128, 64));
+		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setFont(new Font("Nirmala UI", Font.BOLD, 28));
+		btnNewButton.setBounds(514, 627, 245, 68);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(EndGame.class.getResource("/res/game over.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(EndGame.class.getResource("/res/gameover.jpg")));
 		lblNewLabel.setBounds(10, 10, 1301, 748);
 		contentPane.add(lblNewLabel);
 		

@@ -4,10 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-//import java.util.Random;
-//import View.GameGUI;
-import model.Game;
-//import Controller.GameEngine;
+
 /**
  * Game that interfaces to an external Server to retrieve games
  * 
@@ -56,8 +53,8 @@ public class GameServer {
 	 * @throws MalformedURLException
 	 */
 	public Game getRandomGame() throws MalformedURLException {
-		String smileapi = "https://marcconrad.com/uob/tomato/api.php?out=csv"; // Smile API 
-		String dataraw = readUrl(smileapi); 
+		String tomatoapi = "https://marcconrad.com/uob/tomato/api.php?out=csv"; // Tomato API 
+		String dataraw = readUrl(tomatoapi); 
 		String[] data = dataraw.split(","); 
 		
 		URL quest = new URL(data[0]); 

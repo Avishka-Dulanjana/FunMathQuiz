@@ -11,6 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -28,7 +29,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import model.ModelDatabase;
+import repo.SaveSignup;
+import model.SignIn;
+import repo.DatabaseConnection;
 
 public class SignUp extends JFrame {
 	
@@ -53,13 +56,18 @@ public class SignUp extends JFrame {
 			}
 		});
 	}
+	// Email validation function using a simple regex
+				private boolean isValidEmail(String email) {
+				    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+				    return email.matches(emailRegex);
+				}
 
 	/**
 	 * Create the frame.
 	 */
 	public SignUp() {
 		
-			setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/res/main_pic_01.jpg")));
+			setIconImage(Toolkit.getDefaultToolkit().getImage(SignUp.class.getResource("/res/SignUpPage.jpg")));
 //			contentPane.setVisible(true);
 			setUndecorated(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,7 +111,7 @@ public class SignUp extends JFrame {
 			panel.add(lbl_exit);
 			
 			JLabel lbl_main_Picture = new JLabel("");
-			lbl_main_Picture.setIcon(new ImageIcon(SignUp.class.getResource("/res/signup (2).jpg")));
+			lbl_main_Picture.setIcon(new ImageIcon(SignUp.class.getResource("/res/Fun Math Quiz.jpg")));
 			lbl_main_Picture.setBounds(411, 0, 896, 754);
 			panel.add(lbl_main_Picture);
 			
@@ -196,6 +204,65 @@ public class SignUp extends JFrame {
 			panel.add(lbl_email_1);
 			
 			JButton btn_login = new JButton("Sign Up");
+			
+			
+			
+			// Validation 
+			
+			btn_login.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					String fullName = txt_full_name.getText().trim();
+			        String gameName = txt_game_name.getText().trim();
+			        String email = txt_email.getText().trim();
+			        String password = new String(txt_password.getPassword());
+					// TODO Auto-generated method stub
+
+					if(fullName.isEmpty() ||fullName.equals("Enter Your Name"))
+					{
+						JOptionPane.showMessageDialog(null," User name cannot be blank");
+					}
+					else if(gameName.isEmpty() || gameName.equals("Enter Your Game Nickname"))
+					{
+						JOptionPane.showMessageDialog(null, "Nick Name cannot be blank");
+					}
+					else if(email.isEmpty() || email.equals("Enter Your Email Address"))
+					{
+						JOptionPane.showMessageDialog(null, "Email cannot be blank");
+					}
+					else if (!isValidEmail(email)) {
+			            JOptionPane.showMessageDialog(null, "Invalid email address");
+			        } 
+		 			
+					else if(password.isEmpty() || password.equals("Password"))
+					{
+						JOptionPane.showMessageDialog(null, "Password cannot be blank");
+					}
+					else {
+						try {
+							SignIn signIn = new SignIn(txt_full_name.getText(),txt_game_name.getText(),txt_email.getText(),txt_password.getText());
+			                SaveSignup save = new SaveSignup(signIn);
+			                save.saveSignInToDataBase();
+			                JOptionPane.showMessageDialog(null, "Sign in Successfull..! Go back to Login..!");
+			                txt_full_name.setText("");
+			                txt_game_name.setText("");
+			                txt_email.setText("");
+			                txt_password.setText("");
+
+						}
+						/**
+						 * Exception handling
+						 */
+						catch(Exception ex)
+						{
+							JOptionPane.showInputDialog(this, "Sign Up unsuuccessfull..! Please try again.");
+							
+						}
+					}
+				}
+			});
+				
+			
 			btn_login.setForeground(new Color(255, 255, 255));
 			btn_login.addMouseListener(new MouseAdapter() {
 				@Override
@@ -218,32 +285,7 @@ public class SignUp extends JFrame {
 					btn_login.setBackground(new Color(198, 61, 47));
 				}
 			});
-//			btn_login.addActionListener(new ActionListener() {
-//				public void actionPerformed(ActionEvent e) {
-//					/**
-//					 * Retrieve data from the signup table and matching with the details user entered.
-//					 */
-//									try {
-//										
-//										Connection con= ModelDatabase.createConnection();
-//										Statement stm =con.createStatement();
-//										String sql="select * from signup where sname='"+txt_email.getText()+"'and spassword='"+txt_password.getText()+"';";
-//										ResultSet rs=stm.executeQuery(sql);
-//										
-//										if (rs.next()) {
-//											dispose();
-//											new HomePage().setVisible(true);
-//										}
-//										else {
-//											JOptionPane.showMessageDialog(Login.this,"Username or Password Error..!");
-//											txt_password.setText("");
-//										}
-//																	
-//									}catch (Exception e1) {
-//										System.out.println(e1.getMessage());
-//									}
-//				}
-//			});
+
 
 			btn_login.setBackground(new Color(198, 61, 47));
 			btn_login.setFont(new Font("Nirmala UI", Font.BOLD, 22));

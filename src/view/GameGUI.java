@@ -19,6 +19,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.Component;
 
 /**
  * A Simple Graphical User Interface for the Six Equation Game.
@@ -43,27 +44,27 @@ public class GameGUI extends JFrame implements ActionListener {
 */
 		int level=myGame.getLevel();
 		if (correct) {
-			System.out.println("YEAH!");
+			System.out.println("CORRECT ANSWER..!");
 			currentGame = myGame.nextGame(); 
 			ImageIcon ii = new ImageIcon(currentGame);
 			questArea.setIcon(ii);
-			infoArea.setText("Good!  Score: "+score);
+			infoArea.setText("AWESOME SOLDIER! LET'S GO!!!  Score: "+score);
 /**
 * Upgraded level's value set to the JLabel 
 */
-			lblLevel.setText("Level:"+level);
+			lbl_level.setText("Level:"+level);
 /**
 * Timer set for new Level
 */
 			timer.stop();
 			second =30;
 			minute =0;
-			counterLabel.setText("00:30");
+			lbl_timer.setText("00:30");
 			countdownTimer();
 			timer.start();		
 		} else { 
-			System.out.println("Not Correct"); 
-			infoArea.setText("Oops. Try again!  Score: "+score);
+			System.out.println("INCORRECT ANSWER..!"); 
+			infoArea.setText("ANSWER INCORRECT!! TRY AGAIN!  Score: "+score);
 		}
 	}
 
@@ -74,9 +75,9 @@ public class GameGUI extends JFrame implements ActionListener {
 /**
 * set variables for the components(level and time)
 */
-	JLabel lblLevel = new JLabel("Level"); //P.C.Eranda guide me and help me to add this level up method for the game.
+	JLabel lbl_level = new JLabel("Level");
 	//Set timer to game
-	JLabel counterLabel;
+	JLabel lbl_timer;
 	Font font1 = new Font("Arial", Font.PLAIN, 30);	
 	Timer timer;	
 	int second=0, minute=1;
@@ -95,21 +96,30 @@ public class GameGUI extends JFrame implements ActionListener {
 		
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(336, 164, 700, 503);
+		panel.setBounds(337, 152, 700, 549);
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 
 		myGame = new GameEngine(player);
 		currentGame = myGame.nextGame();
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		infoArea = new JTextArea(1, 40);
-		infoArea.setForeground(new Color(138, 43, 226));
-		infoArea.setFont(new Font("Monospaced", Font.BOLD, 28));
-		panel.add(infoArea);
+				
+				lbl_timer = new JLabel("");
+				lbl_timer.setForeground(new Color(255, 0, 0));
+				lbl_timer.setHorizontalAlignment(JLabel.CENTER);
+				lbl_timer.setFont(font1);
+				panel.add(lbl_timer);
+				
+				lbl_timer.setText("00:30");
 		
-		infoArea.setEditable(false);
-		infoArea.setText("What is the missing value?     Score: 0");
+				infoArea = new JTextArea(1, 40);
+				infoArea.setAlignmentY(Component.CENTER_ALIGNMENT);
+				infoArea.setForeground(new Color(138, 43, 226));
+				infoArea.setFont(new Font("Monospaced", Font.BOLD, 26));
+				panel.add(infoArea);
+				
+				infoArea.setEditable(false);
+				infoArea.setText("WHAT IS THE CORRECT ANSWER?  SCORE: 0");
 		
 		JScrollPane infoPane = new JScrollPane();
 		panel.add(infoPane);
@@ -121,11 +131,11 @@ public class GameGUI extends JFrame implements ActionListener {
 	    
 	  		JScrollPane questPane = new JScrollPane(questArea);
 	  		panel.add(questPane);
-	  		lblLevel.setHorizontalAlignment(SwingConstants.CENTER);
-	  		lblLevel.setForeground(new Color(255, 0, 0));
-	  		questPane.setColumnHeaderView(lblLevel);
-	  		lblLevel.setFont(new Font("Nirmala UI", Font.BOLD, 25));
-	  		lblLevel.setText("Level: 1");
+	  		lbl_level.setHorizontalAlignment(SwingConstants.CENTER);
+	  		lbl_level.setForeground(new Color(255, 0, 0));
+	  		questPane.setColumnHeaderView(lbl_level);
+	  		lbl_level.setFont(new Font("Nirmala UI", Font.BOLD, 25));
+	  		lbl_level.setText("Level: 1");
 	    
 		
 
@@ -136,22 +146,14 @@ public class GameGUI extends JFrame implements ActionListener {
 		}
 		
 		JLabel lblFail = new JLabel("TIME TO PLAY");
-		lblFail.setForeground(Color.WHITE);
+		lblFail.setForeground(new Color(255, 255, 255));
 		lblFail.setFont(new Font("Arial Black", Font.BOLD, 55));
-		lblFail.setBounds(463, 55, 465, 87);
+		lblFail.setBounds(448, 55, 456, 87);
 		getContentPane().add(lblFail);
 
 		getContentPane().add(panel);
 		panel.repaint();
-		
-		counterLabel = new JLabel("");
-		counterLabel.setForeground(new Color(30, 144, 255));
-		counterLabel.setHorizontalAlignment(JLabel.CENTER);
-		counterLabel.setFont(font1);
-		panel.add(counterLabel);
 		panel.setVisible(true);
-		
-		counterLabel.setText("00:30");
 /**
 * Button click events and action listener used 
 */
@@ -159,7 +161,7 @@ public class GameGUI extends JFrame implements ActionListener {
 		btnQuite.setBorder(new LineBorder(new Color(255, 0, 0), 2, true));
 		btnQuite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new HomePage().setVisible(true);
+				new Home().setVisible(true);
 				dispose();
 			}
 		});
@@ -179,7 +181,7 @@ public class GameGUI extends JFrame implements ActionListener {
 		lbl_game_back.setHorizontalTextPosition(SwingConstants.CENTER);
 		lbl_game_back.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_game_back.setBorder(new LineBorder(new Color(0, 0, 0), 7));
-		lbl_game_back.setIcon(new ImageIcon(GameGUI.class.getResource("/res/1.jpg")));
+		lbl_game_back.setIcon(new ImageIcon(GameGUI.class.getResource("/res/GameGUI.jpg")));
 		lbl_game_back.setBounds(0, 0, 1321, 768);
 		getContentPane().add(lbl_game_back);
 		lbl_exit.addMouseListener(new MouseAdapter() {
@@ -206,8 +208,10 @@ public class GameGUI extends JFrame implements ActionListener {
 		timer.start();		
 
 	}
-public void countdownTimer() {// Used the https://www.youtube.com/watch?v=zWw72j-EbqI video to set count down timer for the game
-							 //https://www.ryisnow.online/2021/04/java-beginner-code-sample-create-timer.html
+public void countdownTimer() {
+	
+	// https://www.youtube.com/watch?v=zWw72j-EbqI ===== game timer
+	//https://www.ryisnow.online/2021/04/java-beginner-code-sample-create-timer.html
 		
 		timer = new Timer(1000, new ActionListener() {
 			
@@ -217,14 +221,14 @@ public void countdownTimer() {// Used the https://www.youtube.com/watch?v=zWw72j
 				second--;
 				ddSecond = dFormat.format(second);
 				ddMinute = dFormat.format(minute);	
-				counterLabel.setText(ddMinute + ":" + ddSecond);
+				lbl_timer.setText(ddMinute + ":" + ddSecond);
 				
 				if(second==-1) {
 					second = 30;
 					minute--;
 					ddSecond = dFormat.format(second);
 					ddMinute = dFormat.format(minute);	
-					counterLabel.setText(ddMinute + ":" + ddSecond);
+					lbl_timer.setText(ddMinute + ":" + ddSecond);
 				}
 				if(minute==0 && second==0) {
 					timer.stop();
@@ -239,7 +243,7 @@ public void countdownTimer() {// Used the https://www.youtube.com/watch?v=zWw72j
  */
 	public GameGUI() {
 		super();
-		setIconImage(Toolkit.getDefaultToolkit().getImage(GameGUI.class.getResource("/res/main_pic_01.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GameGUI.class.getResource("/res/SignUpPage.jpg")));
 		getContentPane().setPreferredSize(new Dimension(10, 10));
 		getContentPane().setMaximumSize(new Dimension(32767, 32767));
 		initGame(null);

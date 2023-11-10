@@ -28,11 +28,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import repo.DatabaseConnection;
 import view.GameGUI;
-import model.ModelDatabase;
-import javax.swing.JTextArea;
 
-public class HomePage extends JFrame {
+import javax.swing.JTextArea;
+import javax.swing.border.MatteBorder;
+
+public class Home extends JFrame {
 
 	private JPanel contentPane;
 
@@ -43,7 +45,7 @@ public class HomePage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HomePage frame = new HomePage();
+					Home frame = new Home();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,8 +57,8 @@ public class HomePage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public HomePage() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/res/main_pic_01.jpg")));
+	public Home() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Home.class.getResource("/res/SignUpPage.jpg")));
 //		contentPane.setVisible(true);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,7 +82,7 @@ public class HomePage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(JOptionPane.showConfirmDialog(null,  "Exit?", "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION)==0) {
-					HomePage.this.dispose();
+					Home.this.dispose();
 				}
 			}
 			@Override
@@ -98,14 +100,14 @@ public class HomePage extends JFrame {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(245, 421, 325, 131);
 		
-		JButton btn_login_1 = new JButton("QUIT");
-		btn_login_1.setForeground(Color.WHITE);
-		btn_login_1.setFont(new Font("Monospaced", Font.BOLD, 26));
-		btn_login_1.setBorder(null);
-		btn_login_1.setBackground(new Color(198, 61, 47));
-		btn_login_1.setBounds(185, 530, 340, 56);
+		JButton btn_quit = new JButton("QUIT");
+		btn_quit.setForeground(new Color(255, 255, 255));
+		btn_quit.setFont(new Font("Monospaced", Font.BOLD, 26));
+		btn_quit.setBorder(null);
+		btn_quit.setBackground(new Color(255, 128, 64));
+		btn_quit.setBounds(112, 559, 340, 56);
 		
-		btn_login_1.addActionListener(new ActionListener() {
+		btn_quit.addActionListener(new ActionListener() {
 			/**
 			 * Action Performed to Login Page
 			 * @param e
@@ -115,18 +117,25 @@ public class HomePage extends JFrame {
 				dispose();
 			}
 		});
-		panel.add(btn_login_1);
+		panel.add(btn_quit);
 		
-		JButton btn_login_2 = new JButton("SCORE");
-		btn_login_2.setForeground(Color.WHITE);
-		btn_login_2.setFont(new Font("Monospaced", Font.BOLD, 26));
-		btn_login_2.setBorder(null);
-		btn_login_2.setBackground(new Color(198, 61, 47));
-		btn_login_2.setBounds(185, 447, 340, 56);
-		panel.add(btn_login_2);
+		JButton btn_scoreboard = new JButton("SCORE");
+		btn_scoreboard.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new ScoreBoard().setVisible(true);
+				dispose();
+			}
+		});
+		btn_scoreboard.setForeground(Color.WHITE);
+		btn_scoreboard.setFont(new Font("Monospaced", Font.BOLD, 26));
+		btn_scoreboard.setBorder(null);
+		btn_scoreboard.setBackground(new Color(255, 128, 64));
+		btn_scoreboard.setBounds(112, 484, 340, 56);
+		panel.add(btn_scoreboard);
 		
 		JTextArea txtrunlockYourInner = new JTextArea();
-		txtrunlockYourInner.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		txtrunlockYourInner.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		txtrunlockYourInner.setForeground(new Color(255, 255, 255));
 		txtrunlockYourInner.setDisabledTextColor(new Color(0, 0, 0));
 		txtrunlockYourInner.setEditable(false);
@@ -134,7 +143,7 @@ public class HomePage extends JFrame {
 		txtrunlockYourInner.setSelectionColor(new Color(0, 0, 0));
 		txtrunlockYourInner.setLineWrap(true);
 		txtrunlockYourInner.setText("\"Unlock Your Inner Math Genius! Welcome to the Math IQ Game, where fun and learning go hand in hand. Sharpen your mathematical skills, challenge your brain, and embark on an exciting journey of numbers and logic. Are you ready to conquer the world of math puzzles and become a true Math IQ champion? Let's dive in and prove that math can be both entertaining and rewarding!\"");
-		txtrunlockYourInner.setBounds(185, 210, 494, 141);
+		txtrunlockYourInner.setBounds(111, 253, 544, 141);
 		panel.add(txtrunlockYourInner);
 		lbl_exit.setHorizontalTextPosition(SwingConstants.CENTER);
 		lbl_exit.setHorizontalAlignment(SwingConstants.CENTER);
@@ -167,24 +176,67 @@ public class HomePage extends JFrame {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btn_login.setBackground(new Color(198, 61, 47));
+				btn_login.setBackground(new Color(255, 128, 64));
 				btn_login.setForeground(Color.white);
 				
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btn_login.setBackground(new Color(198, 61, 47));
+				btn_login.setBackground(new Color(255, 128, 64));
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				btn_login.setBackground(new Color(198, 61, 47));
+				btn_login.setBackground(new Color(255, 128, 64));
+			}
+		});
+		btn_scoreboard.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btn_scoreboard.setBackground(new Color(255, 255, 123));
+				btn_scoreboard.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btn_scoreboard.setBackground(new Color(255, 128, 64));
+				btn_scoreboard.setForeground(Color.white);
+				
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btn_scoreboard.setBackground(new Color(255, 128, 64));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				btn_scoreboard.setBackground(new Color(255, 128, 64));
+			}
+		});
+		
+		btn_quit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btn_quit.setBackground(new Color(255, 255, 123));
+				btn_quit.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btn_quit.setBackground(new Color(255, 128, 64));
+				btn_quit.setForeground(Color.white);
+				
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btn_quit.setBackground(new Color(255, 128, 64));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				btn_quit.setBackground(new Color(255, 128, 64));
 			}
 		});
 
-		btn_login.setBackground(new Color(198, 61, 47));
+		btn_login.setBackground(new Color(255, 128, 64));
 		btn_login.setFont(new Font("Monospaced", Font.BOLD, 26));
 		btn_login.setBorder(null);
-		btn_login.setBounds(185, 361, 340, 56);
+		btn_login.setBounds(112, 414, 340, 56);
 		panel.add(btn_login);
 		
 		JLabel lbl_email_1_1_1 = new JLabel("Copyright@Robotz game");
@@ -198,11 +250,12 @@ public class HomePage extends JFrame {
 		lblLogin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLogin.setForeground(Color.WHITE);
 		lblLogin.setFont(new Font("Nirmala UI", Font.BOLD, 55));
-		lblLogin.setBounds(185, 126, 373, 74);
+		lblLogin.setBounds(108, 169, 373, 74);
 		panel.add(lblLogin);
 		
 		JLabel lbl_main_Picture = new JLabel("");
-		lbl_main_Picture.setIcon(new ImageIcon(HomePage.class.getResource("/res/home.jpg")));
+		lbl_main_Picture.setForeground(new Color(255, 255, 255));
+		lbl_main_Picture.setIcon(new ImageIcon(Home.class.getResource("/res/Untitled design.jpg")));
 		lbl_main_Picture.setBounds(0, 0, 1307, 754);
 		panel.add(lbl_main_Picture);
 		setLocationRelativeTo(null);

@@ -1,4 +1,4 @@
-package model;
+
 import view.Login;
 
 public class Main {
