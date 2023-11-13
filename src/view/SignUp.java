@@ -111,7 +111,7 @@ public class SignUp extends JFrame {
 			panel.add(lbl_exit);
 			
 			JLabel lbl_main_Picture = new JLabel("");
-			lbl_main_Picture.setIcon(new ImageIcon(SignUp.class.getResource("/res/Fun Math Quiz.jpg")));
+			lbl_main_Picture.setIcon(new ImageIcon(SignUp.class.getResource("/res/123.jpg")));
 			lbl_main_Picture.setBounds(411, 0, 896, 754);
 			panel.add(lbl_main_Picture);
 			

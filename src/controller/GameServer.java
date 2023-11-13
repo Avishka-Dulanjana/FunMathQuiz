@@ -24,7 +24,7 @@ public class GameServer {
 	        URL url = new URL(urlString);
 	        InputStream inputStream = url.openStream();
 	              
-	        // Choose anyone of https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java
+	        // take code https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java
 	        // to convert InputStream to String.
 	        ByteArrayOutputStream result = new ByteArrayOutputStream();
 	        byte[] buffer = new byte[1024];

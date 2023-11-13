@@ -13,40 +13,6 @@ public class SignIn {
     public String user_game_name;
     public String user_password;
     
-//    public boolean validate() {
-//        if (user_name == null || user_name.trim().isEmpty()) {
-//            System.out.println("Username cannot be empty...!");
-//            return false;
-//        }
-//
-//        if (user_email == null || !isValidEmail(user_email)) {
-//            System.out.println("Invalid email address...!");
-//            return false;
-//        }
-//        
-//        if (user_game_name == null || user_game_name.trim().isEmpty()) {
-//            System.out.println("Invalid game nick name...!");
-//            return false;
-//        }
-//        
-//        if (user_password == null || user_password.trim().isEmpty()) {
-//            System.out.println("Invalid password...!");
-//            return false;
-//        }
-//
-//        // Add more validation rules as needed
-//
-//        return true;
-//    }
-//
-//    private boolean isValidEmail(String email) {
-//        // A simple email validation using regular expression
-//        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-//        Pattern pattern = Pattern.compile(emailRegex);
-//        Matcher matcher = pattern.matcher(email);
-//        return matcher.matches();
-//    }
-    
     
 	public SignIn(String user_name, String user_email, String user_game_name, String user_password) {
 		super();

@@ -80,7 +80,7 @@ public class Login extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lbl_main_Picture = new JLabel("");
-		lbl_main_Picture.setIcon(new ImageIcon(Login.class.getResource("/res/123.jpg")));
+		lbl_main_Picture.setIcon(new ImageIcon(Login.class.getResource("/res/Start Screen.jpg")));
 		lbl_main_Picture.setBounds(0, 0, 896, 754);
 		panel.add(lbl_main_Picture);
 		
@@ -200,8 +200,13 @@ public class Login extends JFrame {
 									ResultSet rs=stm.executeQuery(sql);
 									
 									if (rs.next()) {
+
+										String username = rs.getString("user_game_name");
 										dispose();
-										new Home().setVisible(true);
+										Home home = new Home();
+										home.lbl_username.setText(username); // Login game username set to Home Page
+										home.setVisible(true);
+										
 									}
 									else {
 										JOptionPane.showMessageDialog(Login.this,"Username or Password Error..!");

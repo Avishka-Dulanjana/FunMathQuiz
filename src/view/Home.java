@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -37,6 +38,9 @@ import javax.swing.border.MatteBorder;
 public class Home extends JFrame {
 
 	private JPanel contentPane;
+	public JLabel lbl_username;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -53,7 +57,7 @@ public class Home extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -102,10 +106,10 @@ public class Home extends JFrame {
 		
 		JButton btn_quit = new JButton("QUIT");
 		btn_quit.setForeground(new Color(255, 255, 255));
-		btn_quit.setFont(new Font("Monospaced", Font.BOLD, 26));
+		btn_quit.setFont(new Font("Segoe UI Black", Font.BOLD, 26));
 		btn_quit.setBorder(null);
 		btn_quit.setBackground(new Color(255, 128, 64));
-		btn_quit.setBounds(112, 559, 340, 56);
+		btn_quit.setBounds(112, 567, 340, 56);
 		
 		btn_quit.addActionListener(new ActionListener() {
 			/**
@@ -117,76 +121,101 @@ public class Home extends JFrame {
 				dispose();
 			}
 		});
-		panel.add(btn_quit);
-		
-		JButton btn_scoreboard = new JButton("SCORE");
-		btn_scoreboard.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				new ScoreBoard().setVisible(true);
-				dispose();
-			}
-		});
-		btn_scoreboard.setForeground(Color.WHITE);
-		btn_scoreboard.setFont(new Font("Monospaced", Font.BOLD, 26));
-		btn_scoreboard.setBorder(null);
-		btn_scoreboard.setBackground(new Color(255, 128, 64));
-		btn_scoreboard.setBounds(112, 484, 340, 56);
-		panel.add(btn_scoreboard);
 		
 		JTextArea txtrunlockYourInner = new JTextArea();
-		txtrunlockYourInner.setFont(new Font("Monospaced", Font.PLAIN, 14));
+		txtrunlockYourInner.setOpaque(false);
+		txtrunlockYourInner.setLineWrap(true);
+		txtrunlockYourInner.setCaretColor(new Color(0, 0, 0));
+		txtrunlockYourInner.setFont(new Font("Monospaced", Font.BOLD | Font.ITALIC, 14));
 		txtrunlockYourInner.setForeground(new Color(255, 255, 255));
 		txtrunlockYourInner.setDisabledTextColor(new Color(0, 0, 0));
 		txtrunlockYourInner.setEditable(false);
 		txtrunlockYourInner.setWrapStyleWord(true);
 		txtrunlockYourInner.setSelectionColor(new Color(0, 0, 0));
-		txtrunlockYourInner.setLineWrap(true);
 		txtrunlockYourInner.setText("\"Unlock Your Inner Math Genius! Welcome to the Math IQ Game, where fun and learning go hand in hand. Sharpen your mathematical skills, challenge your brain, and embark on an exciting journey of numbers and logic. Are you ready to conquer the world of math puzzles and become a true Math IQ champion? Let's dive in and prove that math can be both entertaining and rewarding!\"");
-		txtrunlockYourInner.setBounds(111, 253, 544, 141);
+		txtrunlockYourInner.setBounds(118, 247, 492, 141);
 		panel.add(txtrunlockYourInner);
+		txtrunlockYourInner.setBackground(new Color(0, 0, 0));
+		
+		JLabel lbl_opaque = new JLabel("");
+		lbl_opaque.setBackground(new Color(0, 0, 0));
+		lbl_opaque.setOpaque(true);
+		lbl_opaque.setBounds(112, 242, 498, 159);
+		panel.add(lbl_opaque);
+		
+		JLabel lbl_ = new JLabel("Welcome");
+		lbl_.setHorizontalTextPosition(SwingConstants.LEFT);
+		lbl_.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_.setForeground(Color.WHITE);
+		lbl_.setFont(new Font("Nirmala UI", Font.BOLD, 55));
+		lbl_.setBounds(112, 152, 252, 74);
+		panel.add(lbl_);
+		
+		lbl_username = new JLabel("");
+		lbl_username.setForeground(new Color(255, 255, 255));
+		lbl_username.setFont(new Font("Nirmala UI", Font.BOLD, 55));
+		lbl_username.setBounds(374, 152, 282, 74);
+		panel.add(lbl_username);
+		panel.add(btn_quit);
+		
+		JButton btn_scoreboard = new JButton("SCORE");
+		
+		btn_scoreboard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScoreBoard scoreBoard = new ScoreBoard();
+				scoreBoard.setVisible(true);
+				scoreBoard.lbl_username.setText(lbl_username.getText()); // label name set to scoreboard
+				dispose();
+			}
+		});
+		btn_scoreboard.setForeground(Color.WHITE);
+		btn_scoreboard.setFont(new Font("Segoe UI Black", Font.BOLD, 26));
+		btn_scoreboard.setBorder(null);
+		btn_scoreboard.setBackground(new Color(255, 128, 64));
+		btn_scoreboard.setBounds(112, 492, 340, 56);
+		panel.add(btn_scoreboard);
 		lbl_exit.setHorizontalTextPosition(SwingConstants.CENTER);
 		lbl_exit.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_exit.setForeground(new Color(255, 255, 255));
 		lbl_exit.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lbl_exit.setBounds(1262, 0, 45, 47);
 		Color transparentColor = new Color(0, 0, 0, 0);
-		txtrunlockYourInner.setBackground(transparentColor);
-		txtrunlockYourInner.setOpaque(false);
 		panel.add(lbl_exit);
 		
-		JButton btn_login = new JButton("START");
-		btn_login.setForeground(new Color(255, 255, 255));
+		JButton btn_start = new JButton("START");
+		btn_start.setForeground(new Color(255, 255, 255));
 		
 		/**
 		 * Button used to move from one JFrame to another JFrame
 		 */
-		btn_login.addActionListener(new ActionListener() {
+		btn_start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GameGUI().setVisible(true);
+				GameGUI gamegui= new GameGUI();
+				gamegui.setVisible(true);
+				gamegui.lbl_username.setText(lbl_username.getText()); // label name set to game GUI form
 				dispose();
 			}
 		});
 		
-		btn_login.addMouseListener(new MouseAdapter() {
+		btn_start.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				btn_login.setBackground(new Color(255, 255, 123));
-				btn_login.setForeground(Color.black);
+				btn_start.setBackground(new Color(255, 255, 123));
+				btn_start.setForeground(Color.black);
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btn_login.setBackground(new Color(255, 128, 64));
-				btn_login.setForeground(Color.white);
+				btn_start.setBackground(new Color(255, 128, 64));
+				btn_start.setForeground(Color.white);
 				
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btn_login.setBackground(new Color(255, 128, 64));
+				btn_start.setBackground(new Color(255, 128, 64));
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				btn_login.setBackground(new Color(255, 128, 64));
+				btn_start.setBackground(new Color(255, 128, 64));
 			}
 		});
 		btn_scoreboard.addMouseListener(new MouseAdapter() {
@@ -233,25 +262,17 @@ public class Home extends JFrame {
 			}
 		});
 
-		btn_login.setBackground(new Color(255, 128, 64));
-		btn_login.setFont(new Font("Monospaced", Font.BOLD, 26));
-		btn_login.setBorder(null);
-		btn_login.setBounds(112, 414, 340, 56);
-		panel.add(btn_login);
+		btn_start.setBackground(new Color(255, 128, 64));
+		btn_start.setFont(new Font("Segoe UI Black", Font.BOLD, 26));
+		btn_start.setBorder(null);
+		btn_start.setBounds(112, 422, 340, 56);
+		panel.add(btn_start);
 		
 		JLabel lbl_email_1_1_1 = new JLabel("Copyright@Robotz game");
 		lbl_email_1_1_1.setForeground(Color.WHITE);
 		lbl_email_1_1_1.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
 		lbl_email_1_1_1.setBounds(1098, 712, 177, 32);
 		panel.add(lbl_email_1_1_1);
-		
-		JLabel lblLogin = new JLabel("Start Game");
-		lblLogin.setHorizontalTextPosition(SwingConstants.LEFT);
-		lblLogin.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLogin.setForeground(Color.WHITE);
-		lblLogin.setFont(new Font("Nirmala UI", Font.BOLD, 55));
-		lblLogin.setBounds(108, 169, 373, 74);
-		panel.add(lblLogin);
 		
 		JLabel lbl_main_Picture = new JLabel("");
 		lbl_main_Picture.setForeground(new Color(255, 255, 255));

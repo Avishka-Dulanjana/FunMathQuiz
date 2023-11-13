@@ -8,6 +8,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -18,6 +19,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
 import repo.DatabaseConnection;
 
@@ -27,14 +34,22 @@ import javax.swing.JCheckBox;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import java.awt.Dimension;
+import javax.swing.JScrollPane;
 
 public class ScoreBoard extends JFrame {
-
+	
+	public JLabel lbl_username;
 	private JPanel contentPane;
+	private JTable table;
+	private boolean isScoreButtonClicked = false;
 
 	/**
 	 * Launch the application.
@@ -68,6 +83,7 @@ public class ScoreBoard extends JFrame {
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		
 		JPanel panel = new JPanel();
+		panel.setIgnoreRepaint(true);
 		panel.setBorder(null);
 		panel.setFont(new Font("Tahoma", Font.PLAIN, 35));
 		panel.setForeground(new Color(255, 255, 255));
@@ -75,25 +91,34 @@ public class ScoreBoard extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lbl_email_1_1_1 = new JLabel("Copyright@Robotz game");
-		lbl_email_1_1_1.setForeground(Color.WHITE);
-		lbl_email_1_1_1.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
-		lbl_email_1_1_1.setBounds(10, 712, 177, 32);
-		panel.add(lbl_email_1_1_1);
+		lbl_username = new JLabel("");
+		lbl_username.setVisible(false);
+		lbl_username.setFont(new Font("Tahoma", Font.PLAIN, 29));
+		lbl_username.setForeground(new Color(255, 255, 255));
+		lbl_username.setBounds(946, 45, 180, 47);
+		panel.add(lbl_username);
+		
+		JLabel lbl_copy_right = new JLabel("Copyright@Robotz game");
+		lbl_copy_right.setForeground(Color.WHITE);
+		lbl_copy_right.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
+		lbl_copy_right.setBounds(10, 712, 177, 32);
+		panel.add(lbl_copy_right);
 		
 		JLabel lbl_main_Picture = new JLabel("");
 		lbl_main_Picture.setIcon(new ImageIcon(ScoreBoard.class.getResource("/res/LeaderBoard_image.jpg")));
 		lbl_main_Picture.setBounds(0, 0, 896, 754);
 		panel.add(lbl_main_Picture);
 		
-		JButton btn_back = new JButton("Back");
+		JButton btn_back = new JButton("Click");
 		btn_back.addActionListener(new ActionListener() {
 			/**
 			 * Action Performed to Signup Page
 			 * @param e
 			 */
 			public void actionPerformed(ActionEvent e) {
-				new Home().setVisible(true);
+				Home home = new Home();
+				home.setVisible(true);
+				home.lbl_username.setText(lbl_username.getText());
 				dispose();
 			}
 		});
@@ -133,7 +158,7 @@ public class ScoreBoard extends JFrame {
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setForeground(Color.WHITE);
 		lblLogin.setFont(new Font("Nirmala UI", Font.BOLD, 50));
-		lblLogin.setBounds(928, 127, 314, 63);
+		lblLogin.setBounds(936, 108, 314, 63);
 		panel.add(lblLogin);
 		
 		JLabel lblChanger = new JLabel("Welcome Master");
@@ -141,7 +166,7 @@ public class ScoreBoard extends JFrame {
 		lblChanger.setHorizontalAlignment(SwingConstants.LEFT);
 		lblChanger.setForeground(Color.WHITE);
 		lblChanger.setFont(new Font("Nirmala UI", Font.PLAIN, 30));
-		lblChanger.setBounds(938, 196, 238, 39);
+		lblChanger.setBounds(936, 167, 238, 39);
 		panel.add(lblChanger);
 		
 		JLabel lbl_signup = new JLabel("Back to the game?");
@@ -150,8 +175,139 @@ public class ScoreBoard extends JFrame {
 		lbl_signup.setFont(new Font("Nirmala UI", Font.PLAIN, 18));
 		lbl_signup.setBounds(947, 699, 154, 25);
 		panel.add(lbl_signup);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setFont(new Font("Nirmala UI", Font.BOLD, 30));
+		scrollPane.setBounds(938, 232, 332, 309);
+		panel.add(scrollPane);
+		
+		table = new JTable();
+		table.setSize(new Dimension(1, 1));
+		//table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table.setGridColor(new Color(0, 0, 0));
+		table.setSelectionForeground(new Color(255, 255, 255));
+		scrollPane.setViewportView(table);
+		table.setOpaque(false);
+		table.setSelectionBackground(new Color(255, 0, 0));
+		table.setRowMargin(0);
+		table.setIntercellSpacing(new Dimension(0, 0));
+		table.setRowHeight(30);
+		table.setFont(new Font("Nirmala UI", Font.BOLD, 17));
+		//table.setGridColor(new Color(0, 0, 0));
+		table.setShowGrid(true);
+		table.setGridColor(new Color(0, 0, 0));
+		
+		// Center-align cell content
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        table.setDefaultRenderer(Object.class, centerRenderer);
+		
+        // Score table header
+		JTableHeader header = table.getTableHeader();
+        header.setFont(new Font("Nirmala UI", Font.BOLD, 20));
+        header.setBackground(new Color(200, 200, 200));
+        header.setDefaultRenderer(new UppercaseHeaderRenderer()); // Score table header uppercase
+        
+        
+		table.setModel(new DefaultTableModel(
+			new Object[][] {},
+			new String[] {}
+			) {
+	            @Override
+	            public boolean isCellEditable(int row, int column) {
+	                return false; // Make all cells non-editable
+	            }
+		
+		});
+		
+		JButton btn_score = new JButton("Score");
+		btn_score.setBackground(new Color(255, 128, 64));
+		btn_score.setForeground(new Color(255, 255, 255));
+		btn_score.setFont(new Font("Nirmala UI", Font.BOLD, 16));
+		btn_score.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btn_score.setBackground(new Color(255, 255, 123));
+				btn_score.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btn_score.setBackground(new Color(255, 128, 64));
+				btn_score.setForeground(Color.white);
+				
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btn_score.setBackground(new Color(255, 128, 64));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				btn_score.setBackground(new Color(255, 128, 64));
+			}
+		});
+		
+		
+		btn_score.addActionListener(new ActionListener() {
+			/*
+			 * Score data retrive
+			 * */
+			
+			public void actionPerformed(ActionEvent e) {
+				if(!isScoreButtonClicked) {
+					try {
+						Connection con= DatabaseConnection.createConnection();
+						Statement stm =con.createStatement();
+						String sql = "WITH RankedScores AS ( SELECT game_id, score, ROW_NUMBER() OVER (PARTITION BY game_id ORDER BY score DESC) AS rn FROM score_table ) SELECT game_id, score FROM RankedScores WHERE rn = 1 ORDER BY score DESC LIMIT 15";
+						ResultSet rs = stm.executeQuery(sql);
+						ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						
+						int cols = rsmd.getColumnCount();
+						String[] colName = new String[cols];
+						for(int i=0; i<cols; i++) 
+							colName[i] = rsmd.getColumnName(i+1);
+						model.setColumnIdentifiers(colName);
+						String player_name, marks;
+						while(rs.next()){
+							player_name = rs.getString(1);
+							marks = rs.getString(2);
+							String[] row = {player_name,marks};
+							model.addRow(row);
+						}
+						isScoreButtonClicked = true; // score button only click one time
+					}catch (Exception e1) {
+						System.out.println(e1.getMessage());
+					}
+				}
+				
+			}
+		});
+		btn_score.setBounds(938, 561, 188, 56);
+		panel.add(btn_score);
 		setLocationRelativeTo(null);
 		
 		
 	}
+	
+	
+	// TABEL NAMES SET UPPER CASE
+	
+	
+	private static class UppercaseHeaderRenderer implements TableCellRenderer {
+        private final JLabel label;
+
+        public UppercaseHeaderRenderer() {
+            label = new JLabel();
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setFont(new Font("Nirmala UI", Font.BOLD, 20));
+            label.setBackground(new Color(200, 200, 200));
+            label.setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            label.setText(value.toString().toUpperCase());
+            return label;
+        }
+    }
 }

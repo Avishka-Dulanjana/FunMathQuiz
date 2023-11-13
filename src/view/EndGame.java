@@ -28,6 +28,7 @@ public class EndGame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	public JLabel lbl_username;
 
 	/**
 	 * Launch the application.
@@ -61,16 +62,22 @@ public class EndGame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("PLAY AGAIN");
-		btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		btnNewButton.setDisplayedMnemonicIndex(0);
-		btnNewButton.setBorder(null);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btn_play_again = new JButton("PLAY AGAIN");
+		btn_play_again.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btn_play_again.setDisplayedMnemonicIndex(0);
+		btn_play_again.setBorder(null);
+		btn_play_again.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GameGUI().setVisible(true);
+				Home home = new Home();
+				home.lbl_username.setText(lbl_username.getText());
+				home.setVisible(true);
 				dispose();
 			}
 		});
+		
+		lbl_username = new JLabel("");
+		lbl_username.setBounds(1109, 692, 184, 45);
+		contentPane.add(lbl_username);
 		
 		JLabel lblNewLabel_1 = new JLabel("X");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,11 +104,11 @@ public class EndGame extends JFrame {
 		});
 		
 		
-		btnNewButton.setBackground(new Color(255, 128, 64));
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setFont(new Font("Nirmala UI", Font.BOLD, 28));
-		btnNewButton.setBounds(514, 627, 245, 68);
-		contentPane.add(btnNewButton);
+		btn_play_again.setBackground(new Color(255, 128, 64));
+		btn_play_again.setForeground(new Color(255, 255, 255));
+		btn_play_again.setFont(new Font("Nirmala UI", Font.BOLD, 28));
+		btn_play_again.setBounds(514, 627, 245, 68);
+		contentPane.add(btn_play_again);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);

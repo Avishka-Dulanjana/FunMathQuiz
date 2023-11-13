@@ -6,9 +6,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 
 import controller.GameEngine;
+import model.SignIn;
+import repo.DatabaseConnection;
+import repo.SaveSignup;
 
 //import java.awt.EventQueue;
 import javax.swing.*;
@@ -30,6 +38,7 @@ import java.awt.Component;
 public class GameGUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = -107785653906635L;
+	public JLabel lbl_username;
 
 	/**
 	 * Method that is called when a button has been pressed.
@@ -62,9 +71,38 @@ public class GameGUI extends JFrame implements ActionListener {
 			lbl_timer.setText("00:30");
 			countdownTimer();
 			timer.start();		
-		} else { 
-			System.out.println("INCORRECT ANSWER..!"); 
-			infoArea.setText("ANSWER INCORRECT!! TRY AGAIN!  Score: "+score);
+			//else {
+			//System.out.println("INCORRECT ANSWER..!"); 
+			//infoArea.setText("ANSWER INCORRECT!! TRY AGAIN!  Score: "+score);
+			//}
+		}
+		else {
+	        // Game lose
+			EndGame endgame =new EndGame();
+			endgame.setVisible(true);
+			endgame.lbl_username.setText(lbl_username.getText());
+			timer.stop();
+			dispose();
+	
+			try {
+				Connection con= DatabaseConnection.createConnection();
+				Statement stm =con.createStatement();
+				String query="insert into score_table Values(?,?)";
+				PreparedStatement ps=con.prepareStatement(query);
+				
+				String username = lbl_username.getText(); // Game username set to score board database
+				ps.setString(1, username);
+				ps.setLong(2, score);
+	
+				int i=ps.executeUpdate();
+				ps.close();
+				con.close();
+	
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+	
+			}
 		}
 	}
 
@@ -83,6 +121,7 @@ public class GameGUI extends JFrame implements ActionListener {
 	int second=0, minute=1;
 	String ddSecond, ddMinute;	
 	DecimalFormat dFormat = new DecimalFormat("00");
+	
 	
 /**
  * Initializes the game. 
@@ -145,10 +184,22 @@ public class GameGUI extends JFrame implements ActionListener {
 			btn.addActionListener(this);
 		}
 		
-		JLabel lblFail = new JLabel("TIME TO PLAY");
+		JLabel lbl_image = new JLabel("");
+		lbl_image.setIcon(new ImageIcon(GameGUI.class.getResource("/res/Untitled design (1).png")));
+		lbl_image.setBounds(29, 674, 75, 75);
+		getContentPane().add(lbl_image);
+		
+		lbl_username = new JLabel("");
+		lbl_username.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbl_username.setForeground(new Color(255, 255, 255));
+		lbl_username.setFont(new Font("Nirmala UI", Font.BOLD, 20));
+		lbl_username.setBounds(1073, 712, 215, 34);
+		getContentPane().add(lbl_username);
+		
+		JLabel lblFail = new JLabel("TIME TO PLAY - HURRY UP");
 		lblFail.setForeground(new Color(255, 255, 255));
 		lblFail.setFont(new Font("Arial Black", Font.BOLD, 55));
-		lblFail.setBounds(448, 55, 456, 87);
+		lblFail.setBounds(265, 55, 866, 87);
 		getContentPane().add(lblFail);
 
 		getContentPane().add(panel);
@@ -157,16 +208,26 @@ public class GameGUI extends JFrame implements ActionListener {
 /**
 * Button click events and action listener used 
 */
-		JButton btnQuite = new JButton("  Quit  ");
-		btnQuite.setBorder(new LineBorder(new Color(255, 0, 0), 2, true));
+		JButton btnQuite = new JButton("QUIT");
+		btnQuite.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		btnQuite.addActionListener(new ActionListener() {
+			
+			
+			// Application closed
+			
 			public void actionPerformed(ActionEvent e) {
-				new Home().setVisible(true);
+				EndGame endgame =new EndGame();
+				endgame.setVisible(true);
+				endgame.lbl_username.setText(lbl_username.getText());
+				timer.stop();
 				dispose();
-			}
+			} 
 		});
-		btnQuite.setBackground(new Color(244, 164, 96));
-		btnQuite.setForeground(new Color(220, 20, 60));
+			
+		
+		
+		btnQuite.setBackground(new Color(255, 0, 0));
+		btnQuite.setForeground(new Color(255, 255, 255));
 		btnQuite.setFont(new Font("Nirmala UI", Font.BOLD, 15));
 		panel.add(btnQuite);
 		
@@ -188,6 +249,7 @@ public class GameGUI extends JFrame implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(JOptionPane.showConfirmDialog(null,  "Exit?", "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION)==0) {
+					timer.stop();
 					GameGUI.this.dispose();
 				}
 			}
@@ -235,6 +297,7 @@ public void countdownTimer() {
 					new EndGame().setVisible(true);
 					dispose();
 				}
+				
 			}
 		});		
 	}		
