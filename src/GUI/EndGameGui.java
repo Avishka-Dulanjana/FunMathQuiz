@@ -21,11 +21,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 
+/**
+ * The `EndGameGui` class represents a frame displayed when the player loses the game.
+ * It provides an option to play again and shows the player's score.
+ */
 public class EndGameGui extends JFrame {
 
-	/**
-	 * This a Frame to show that game is over when the player loose the game
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JLabel lbl_username;
@@ -63,12 +64,14 @@ public class EndGameGui extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		// Button to play the game again
 		JButton btn_play_again = new JButton("PLAY AGAIN");
 		btn_play_again.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btn_play_again.setDisplayedMnemonicIndex(0);
 		btn_play_again.setBorder(null);
 		btn_play_again.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Open the HomeGui to play again
 				HomeGui home = new HomeGui();
 				home.lbl_username.setText(lbl_username.getText());
 				home.setVisible(true);
@@ -76,6 +79,7 @@ public class EndGameGui extends JFrame {
 			}
 		});
 		
+		// Label to display the player's score
 		lbl_score = new JLabel("");
 		lbl_score.setForeground(new Color(255, 255, 255));
 		lbl_score.setHorizontalAlignment(SwingConstants.CENTER);
@@ -83,10 +87,12 @@ public class EndGameGui extends JFrame {
 		lbl_score.setBounds(10, 440, 1301, 76);
 		contentPane.add(lbl_score);
 		
+		 // Label to display the player's username
 		lbl_username = new JLabel("");
 		lbl_username.setBounds(1109, 692, 184, 45);
 		contentPane.add(lbl_username);
 		
+		// Close button to exit the application
 		JLabel lblNewLabel_1 = new JLabel("X");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
@@ -94,9 +100,11 @@ public class EndGameGui extends JFrame {
 		lblNewLabel_1.setBounds(1230, 10, 81, 68);
 		contentPane.add(lblNewLabel_1);
 		
+		// Event handling for the close button
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				// Confirm exit and close the frame
 				if(JOptionPane.showConfirmDialog(null,  "Exit?", "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION)==0) {
 					EndGameGui.this.dispose();
 				}
@@ -111,13 +119,14 @@ public class EndGameGui extends JFrame {
 			}
 		});
 		
-		
+		// Styling for the play again button
 		btn_play_again.setBackground(new Color(255, 128, 64));
 		btn_play_again.setForeground(new Color(255, 255, 255));
 		btn_play_again.setFont(new Font("Nirmala UI", Font.BOLD, 28));
 		btn_play_again.setBounds(514, 627, 245, 68);
 		contentPane.add(btn_play_again);
 		
+		// Image label for the game over screen
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);

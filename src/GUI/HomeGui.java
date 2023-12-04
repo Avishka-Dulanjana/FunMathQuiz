@@ -36,12 +36,14 @@ import javax.swing.border.MatteBorder;
 
 import GUI.GameGui;
 
+/**
+ * The main graphical user interface for the home screen of the Math IQ Game.
+ * It provides options for starting the game, viewing the scoreboard, and quitting.
+ */
 public class HomeGui extends JFrame {
 
 	private JPanel contentPane;
 	public JLabel lbl_username;
-	
-	
 
 	/**
 	 * Launch the application.
@@ -64,7 +66,6 @@ public class HomeGui extends JFrame {
 	 */
 	public HomeGui() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(HomeGui.class.getResource("/res/SignUpPage.jpg")));
-//		contentPane.setVisible(true);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1321, 768);
@@ -82,6 +83,7 @@ public class HomeGui extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		// Close button
 		JLabel lbl_exit = new JLabel("X");
 		lbl_exit.addMouseListener(new MouseAdapter() {
 			@Override
@@ -100,11 +102,13 @@ public class HomeGui extends JFrame {
 			}
 		});
 		
+		// Game description
 		JLabel lblNewLabel_1 = new JLabel("\"Unlock Your Inner Math Genius! Welcome to the Math IQ Game, where fun and learning go hand in hand. Sharpen your mathematical skills, challenge your brain, and embark on an exciting journey of numbers and logic. Are you ready to conquer the world of math puzzles and become a true Math IQ champion? Let's dive in and prove that math can be both entertaining and rewarding!\"");
 		lblNewLabel_1.setVerticalAlignment(JLabel.TOP);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(245, 421, 325, 131);
 		
+		// Quit button
 		JButton btn_quit = new JButton("QUIT");
 		btn_quit.setForeground(new Color(255, 255, 255));
 		btn_quit.setFont(new Font("Segoe UI Black", Font.BOLD, 26));
@@ -152,6 +156,7 @@ public class HomeGui extends JFrame {
 		lbl_.setBounds(112, 152, 290, 74);
 		panel.add(lbl_);
 		
+		// User's username label
 		lbl_username = new JLabel("");
 		lbl_username.setForeground(new Color(255, 255, 255));
 		lbl_username.setFont(new Font("Nirmala UI", Font.BOLD, 55));
@@ -159,8 +164,8 @@ public class HomeGui extends JFrame {
 		panel.add(lbl_username);
 		panel.add(btn_quit);
 		
+		// Scoreboard button
 		JButton btn_scoreboard = new JButton("SCORE");
-		
 		btn_scoreboard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ScoreBoardGui scoreBoard = new ScoreBoardGui();
@@ -184,6 +189,7 @@ public class HomeGui extends JFrame {
 		Color transparentColor = new Color(0, 0, 0, 0);
 		panel.add(lbl_exit);
 		
+		// Start button
 		JButton btn_start = new JButton("START");
 		btn_start.setForeground(new Color(255, 255, 255));
 		
@@ -199,6 +205,7 @@ public class HomeGui extends JFrame {
 			}
 		});
 		
+		// Styling for buttons on mouse hover
 		btn_start.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {

@@ -36,6 +36,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * This class represents the graphical user interface for the login functionality.
+ * Users can input their email and password to log in to the system.
+ */
 public class LoginGui extends JFrame {
 
 	private JPanel contentPane;
@@ -62,17 +66,20 @@ public class LoginGui extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginGui() {
+		// Set the icon image for the frame
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGui.class.getResource("/res/SignUpPage.jpg")));
-//		contentPane.setVisible(true);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1321, 768);
+		
+		// Initialize the content pane
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0), 7));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		
+		// Initialize the main panel
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
 		panel.setFont(new Font("Tahoma", Font.PLAIN, 35));
@@ -81,11 +88,13 @@ public class LoginGui extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		// Set up the main picture label
 		JLabel lbl_main_Picture = new JLabel("");
 		lbl_main_Picture.setIcon(new ImageIcon(LoginGui.class.getResource("/res/Start Screen.jpg")));
 		lbl_main_Picture.setBounds(0, 0, 896, 754);
 		panel.add(lbl_main_Picture);
 		
+		// Set up the Email label
 		JLabel lbl_email = new JLabel("Email");
 		lbl_email.setFont(new Font("Nirmala UI", Font.BOLD, 20));
 		lbl_email.setForeground(new Color(255, 255, 255));
@@ -96,6 +105,7 @@ public class LoginGui extends JFrame {
 		txt_email.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
+				// Clear default text when the field gains focus
 				if(txt_email.getText().equals("Enter Your Email Address")) {
 					txt_email.setText("");
 				}else {
@@ -104,11 +114,14 @@ public class LoginGui extends JFrame {
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
+				// Restore default text if the field is empty
 				if(txt_email.getText().equals("")) {
 					txt_email.setText("Enter Your Email Address");
 				}
 			}
 		});
+		
+		// Set text field properties
 		txt_email.setDisabledTextColor(new Color(255, 255, 255));
 		txt_email.setBorder(null);
 		txt_email.setCaretColor(new Color(64, 128, 128));
@@ -120,18 +133,20 @@ public class LoginGui extends JFrame {
 		panel.add(txt_email);
 		txt_email.setColumns(10);
 		
+		// Set up the Password label
 		JLabel lbl_password = new JLabel("Password");
 		lbl_password.setForeground(Color.WHITE);
 		lbl_password.setFont(new Font("Nirmala UI", Font.BOLD, 20));
 		lbl_password.setBounds(938, 335, 124, 25);
 		panel.add(lbl_password);
 		
+		// Set up the Password text field
 		txt_password = new JPasswordField();
 		txt_password.setText("Password");
 		txt_password.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				
+				// Clear default text and show password dots when the field gains focus
 				if(txt_password.getText().equals("Password")) {
 					txt_password.setEchoChar('●');
 					txt_password.setText("");
@@ -140,12 +155,14 @@ public class LoginGui extends JFrame {
 				}
 			}
 			public void focusLost(FocusEvent e) {
+				// Restore default text and hide password dots if the field is empty
 				if(txt_password.getText().equals("")) {
 					txt_password.setText("Password");
 					txt_password.setEchoChar((char)0);
 				}
 			}
 		});
+		// Set text field properties
 		txt_password.setBorder(null);
 		txt_password.setForeground(new Color(255, 255, 255));
 		txt_password.setBackground(new Color(255, 155, 80));
@@ -153,6 +170,7 @@ public class LoginGui extends JFrame {
 		txt_password.setBounds(938, 370, 340, 39);
 		panel.add(txt_password);
 		
+		// Set up the Remember Me checkbox
 		JCheckBox chckbxNewCheckBox = new JCheckBox("hg");
 		chckbxNewCheckBox.setBackground(new Color(0, 0, 0));
 		chckbxNewCheckBox.setActionCommand("");
@@ -160,12 +178,14 @@ public class LoginGui extends JFrame {
 		chckbxNewCheckBox.setBounds(938, 423, 26, 32);
 		panel.add(chckbxNewCheckBox);
 		
+		// Set up the Remember Me label
 		JLabel lbl_email_1 = new JLabel("Remember me");
 		lbl_email_1.setForeground(Color.WHITE);
 		lbl_email_1.setFont(new Font("Nirmala UI", Font.PLAIN, 15));
 		lbl_email_1.setBounds(970, 426, 148, 25);
 		panel.add(lbl_email_1);
 		
+		// Set up the Login button
 		JButton btn_login = new JButton("LOGIN");
 		btn_login.setForeground(new Color(255, 255, 255));
 		btn_login.addMouseListener(new MouseAdapter() {

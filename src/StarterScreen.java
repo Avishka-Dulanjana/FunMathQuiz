@@ -1,5 +1,3 @@
-
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -36,6 +34,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JProgressBar;
 
+
+/**
+ * The StarterScreen class represents the initial screen that is displayed
+ * when the application is launched. It includes a progress bar to indicate
+ * the loading progress and transitions to the LoginGui after loading.
+ */
 public class StarterScreen extends JFrame {
 
 	private JPanel contentPane;
@@ -48,12 +52,14 @@ public class StarterScreen extends JFrame {
 	public static void main(String[] args) {
 		StarterScreen startScreen = new StarterScreen();
 		
-		
+		// Use EventQueue.invokeLater to ensure GUI updates occur on the Event Dispatch Thread
 		EventQueue.invokeLater(new Runnable() {
 			public void run(){
 				startScreen.setVisible(true);
 			}
 		});
+		
+		// Simulate loading progress
 		LoginGui login = new LoginGui();
 				try {
 					for(int i=0; i<=100; i++) {
@@ -64,6 +70,8 @@ public class StarterScreen extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
+				// Hide StarterScreen and show LoginGui
 				new StarterScreen().setVisible(false);
 				login.setVisible(true);
 				startScreen.dispose();
@@ -75,17 +83,22 @@ public class StarterScreen extends JFrame {
 	 * Create the frame.
 	 */
 	public StarterScreen() {
+		// Set the application icon
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGui.class.getResource("/res/SignUpPage.jpg")));
-//		contentPane.setVisible(true);
+		
+		// Set frame properties
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1321, 768);
+		
+		// Create and set up the content pane
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0), 7));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		
+		// Create the main panel
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
 		panel.setFont(new Font("Tahoma", Font.PLAIN, 35));
@@ -94,6 +107,7 @@ public class StarterScreen extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 				
+				// Create and set up the percentage label
 				lbl_percentage = new JLabel("0%");
 				lbl_percentage.setForeground(new Color(255, 255, 255));
 				lbl_percentage.setFont(new Font("Stencil", Font.PLAIN, 25));
@@ -101,21 +115,26 @@ public class StarterScreen extends JFrame {
 				lbl_percentage.setBounds(617, 642, 129, 47);
 				panel.add(lbl_percentage);
 				
+				// Create and set up the progress bar
 				progressBar = new JProgressBar();
 				progressBar.setForeground(new Color(255, 0, 0));
 				progressBar.setBounds(273, 621, 789, 11);
 				panel.add(progressBar);
 		
+		// Create and set up the main picture label
 		JLabel lbl_main_Picture = new JLabel("");
 		lbl_main_Picture.setIcon(new ImageIcon(StarterScreen.class.getResource("/res/SplashScreen.jpg")));
 		lbl_main_Picture.setBounds(0, 0, 1307, 754);
 		panel.add(lbl_main_Picture);
 		
+		// Create and set up the copyright label
 		JLabel lbl_email_1_1_1 = new JLabel("Copyright@Robotz game");
 		lbl_email_1_1_1.setForeground(Color.WHITE);
 		lbl_email_1_1_1.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
 		lbl_email_1_1_1.setBounds(1031, 722, 177, 32);
 		panel.add(lbl_email_1_1_1);
+		
+		// Set the location of the frame to the center of the screen
 		setLocationRelativeTo(null);
 		
 		

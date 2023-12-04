@@ -37,6 +37,11 @@ import model.User;
 import repo.DatabaseConnection;
 import service.SignupService;
 
+
+/**
+ * SignupGui class represents the user sign-up interface.
+ * Users can enter their information to create an account.
+ */
 public class SignupGui extends JFrame {
 	
 	private JPanel contentPane;
@@ -44,6 +49,12 @@ public class SignupGui extends JFrame {
 	private JPasswordField txt_password;
 	private JTextField txt_game_name;
 	private JTextField txt_email;
+	
+	// Email validation function using a simple regex
+	private boolean isValidEmail(String email) {
+	    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+	    return email.matches(emailRegex);
+	}
 
 	/**
 	 * Launch the application.
@@ -60,11 +71,7 @@ public class SignupGui extends JFrame {
 			}
 		});
 	}
-	// Email validation function using a simple regex
-				private boolean isValidEmail(String email) {
-				    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-				    return email.matches(emailRegex);
-				}
+				
 
 	/**
 	 * Create the frame.
@@ -90,6 +97,7 @@ public class SignupGui extends JFrame {
 			contentPane.add(panel);
 			panel.setLayout(null);
 			
+			// Close button
 			JLabel lbl_exit = new JLabel("X");
 			lbl_exit.addMouseListener(new MouseAdapter() {
 				@Override
@@ -114,11 +122,13 @@ public class SignupGui extends JFrame {
 			lbl_exit.setBounds(1262, 0, 45, 47);
 			panel.add(lbl_exit);
 			
+			// Main picture
 			JLabel lbl_main_Picture = new JLabel("");
 			lbl_main_Picture.setIcon(new ImageIcon(SignupGui.class.getResource("/res/123.jpg")));
 			lbl_main_Picture.setBounds(411, 0, 896, 754);
 			panel.add(lbl_main_Picture);
 			
+			// Sign Up label
 			JLabel lblNewLabel = new JLabel("Sign Up");
 			lblNewLabel.setForeground(new Color(255, 255, 255));
 			lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -127,12 +137,14 @@ public class SignupGui extends JFrame {
 			lblNewLabel.setBounds(21, 51, 191, 63);
 			panel.add(lblNewLabel);
 			
+			// Full Name label
 			JLabel lbl_name = new JLabel("Full Name");
 			lbl_name.setFont(new Font("Nirmala UI", Font.BOLD, 20));
 			lbl_name.setForeground(new Color(255, 255, 255));
 			lbl_name.setBounds(32, 167, 158, 25);
 			panel.add(lbl_name);
 			
+			// Full Name text field
 			txt_full_name = new JTextField();
 			txt_full_name.addFocusListener(new FocusAdapter() {
 				@Override
@@ -161,12 +173,14 @@ public class SignupGui extends JFrame {
 			panel.add(txt_full_name);
 			txt_full_name.setColumns(10);
 			
+			// Password label
 			JLabel lbl_password = new JLabel("Password");
 			lbl_password.setForeground(Color.WHITE);
 			lbl_password.setFont(new Font("Nirmala UI", Font.BOLD, 20));
 			lbl_password.setBounds(32, 419, 124, 25);
 			panel.add(lbl_password);
 			
+			// Password text field
 			txt_password = new JPasswordField();
 			txt_password.setText("Password");
 			txt_password.addFocusListener(new FocusAdapter() {
@@ -209,16 +223,24 @@ public class SignupGui extends JFrame {
 			
 			JButton btn_signup = new JButton("Sign Up");
 			
-			// Validation 
-			
+			/**
+			 * ActionListener for the sign-up button in the GUI. Handles user registration
+			 * by validating input fields and sending registration data to a Spring Boot API.
+			 */
 			btn_signup.addActionListener(new ActionListener() {
 				
+				/**
+			     * Invoked when the sign-up button is clicked.
+			     *
+			     * @param e The ActionEvent representing the button click.
+			     */
 				public void actionPerformed(ActionEvent e) {
 					String fullName = txt_full_name.getText().trim();
 			        String gameName = txt_game_name.getText().trim();
 			        String email = txt_email.getText().trim();
 			        String password = new String(txt_password.getPassword());
 			        
+			     // Validate user input
 					if(fullName.isEmpty() ||fullName.equals("Enter Your Name"))
 					{
 						JOptionPane.showMessageDialog(null," User name cannot be blank");
@@ -240,14 +262,12 @@ public class SignupGui extends JFrame {
 						JOptionPane.showMessageDialog(null, "Password cannot be blank");
 					}else{
 						
-						///////////////////// API connects using SpringBoot /////////////////////////////////
-						
-						
+						// Attempt to connect to the Spring Boot API for user registration
 	                    try {
 	                        URL url = new URL("http://localhost:8890/api/v1/user/save");
 	                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-	                        // Set the request method to POST
+	                        // Set up the HTTP request for user registration
 	                        connection.setRequestMethod("POST");
 	                        connection.setRequestProperty("Content-Type", "application/json");
 	                        connection.setDoOutput(true);
@@ -270,7 +290,8 @@ public class SignupGui extends JFrame {
 	                        // Check if the request was successful (HTTP 201 Created)
 	                        if (responseCode == HttpURLConnection.HTTP_CREATED) {
 	                            JOptionPane.showMessageDialog(null, "Sign up Successful! Go back to Login.");
-	                            // Clear the input fields
+	                            
+	                            // Clear the input fields after successful registration
 	                            txt_full_name.setText("");
 	                            txt_game_name.setText("");
 	                            txt_email.setText("");
@@ -278,7 +299,8 @@ public class SignupGui extends JFrame {
 	                        } else {
 	                            JOptionPane.showMessageDialog(null, "Sign Up unsuccessful. Please try again.");
 	                        }
-
+	                        
+	                        // Disconnect the connection
 	                        connection.disconnect();
 	                    } catch (Exception ex) {
 	                        ex.printStackTrace();

@@ -44,11 +44,23 @@ import javax.swing.JTable;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
 
+/**
+ * The ScoreBoardGui class represents the graphical user interface for the Leader Board.
+ * It displays the top scores of players in a table format.
+ * Users can navigate back to the game from this interface.
+ */
 public class ScoreBoardGui extends JFrame {
 	
+	// Label to display the username
 	public JLabel lbl_username;
+	
+	// Panel to hold GUI components
 	private JPanel contentPane;
+	
+	// Table to display the scores
 	private JTable table;
+	
+	// Flag to track if the score button is clicked
 	private boolean isScoreButtonClicked = false;
 
 	/**
@@ -68,11 +80,10 @@ public class ScoreBoardGui extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
-	 */
+     * Creates the Leader Board GUI frame.
+     */
 	public ScoreBoardGui() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ScoreBoardGui.class.getResource("/res/SignUpPage.jpg")));
-//		contentPane.setVisible(true);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1321, 768);
@@ -83,6 +94,7 @@ public class ScoreBoardGui extends JFrame {
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		setLocationRelativeTo(null);
 		
+		// Create the main panel
 		JPanel panel = new JPanel();
 		panel.setIgnoreRepaint(true);
 		panel.setBorder(null);
@@ -92,6 +104,7 @@ public class ScoreBoardGui extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		// Label to display the username
 		lbl_username = new JLabel("");
 		lbl_username.setVisible(false);
 		lbl_username.setFont(new Font("Tahoma", Font.PLAIN, 29));
@@ -99,23 +112,23 @@ public class ScoreBoardGui extends JFrame {
 		lbl_username.setBounds(946, 45, 180, 47);
 		panel.add(lbl_username);
 		
+		// Copyright label
 		JLabel lbl_copy_right = new JLabel("Copyright@Robotz game");
 		lbl_copy_right.setForeground(Color.WHITE);
 		lbl_copy_right.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
 		lbl_copy_right.setBounds(10, 712, 177, 32);
 		panel.add(lbl_copy_right);
 		
+		// Main picture label
 		JLabel lbl_main_Picture = new JLabel("");
 		lbl_main_Picture.setIcon(new ImageIcon(ScoreBoardGui.class.getResource("/res/LeaderBoard_image.jpg")));
 		lbl_main_Picture.setBounds(0, 0, 896, 754);
 		panel.add(lbl_main_Picture);
 		
+		// Button to navigate back to the game
 		JButton btn_back = new JButton("Click");
 		btn_back.addActionListener(new ActionListener() {
-			/**
-			 * Action Performed to Signup Page
-			 * @param e
-			 */
+			// Open the HomeGui and pass the username
 			public void actionPerformed(ActionEvent e) {
 				HomeGui home = new HomeGui();
 				home.setVisible(true);
@@ -130,10 +143,12 @@ public class ScoreBoardGui extends JFrame {
 		btn_back.setBounds(1111, 696, 131, 32);
 		panel.add(btn_back);
 		
+		// Exit label
 		JLabel lbl_exit = new JLabel("X");
 		lbl_exit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				// Show confirmation dialog before exiting
 				if(JOptionPane.showConfirmDialog(null,  "Exit?", "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION)==0) {
 					ScoreBoardGui.this.dispose();
 				}
@@ -225,7 +240,6 @@ public class ScoreBoardGui extends JFrame {
 	/**
 	 * Score table function
 	 */
-	
 	public void loadScoreTable() {
 	    if (!isScoreButtonClicked) {
 	        try {

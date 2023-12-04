@@ -1,6 +1,5 @@
 package GUI;
 
-//import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -34,10 +33,11 @@ import java.awt.Toolkit;
 import java.awt.Component;
 
 /**
- * A Simple Graphical User Interface for the Six Equation Game.
+ * A graphical user interface for the Six Equation Game.
+ * Allows users to play the game and tracks their score and progress.
+ * Implements ActionListener to handle button clicks.
  * 
  * @author Marc Conrad
- *
  */
 public class GameGui extends JFrame implements ActionListener {
 
@@ -58,9 +58,10 @@ public class GameGui extends JFrame implements ActionListener {
 		int solution = Integer.parseInt(e.getActionCommand());
 		boolean correct = myGame.checkSolution(currentGame, solution);
 		int score = myGame.getScore(); 
-/**
-* taking the value from getLevel method to upgrade the level
-*/
+		
+		/**
+		 * taking the value from getLevel method to upgrade the level
+		 */
 		int level=myGame.getLevel();
 		if (correct) {
 			System.out.println("CORRECT ANSWER..!");
@@ -68,13 +69,13 @@ public class GameGui extends JFrame implements ActionListener {
 			ImageIcon ii = new ImageIcon(currentGame);
 			questArea.setIcon(ii);
 			infoArea.setText("AWESOME SOLDIER! LET'S GO!!!  Score: "+score);
-/**
-* Upgraded level value set to the JLabel 
-*/
+			/**
+			 * Upgraded level value set to the JLabel 
+			 */
 			lbl_level.setText("Level:"+level);
-/**
-* Timer set for new Level Begins
-*/
+			/**
+			 * Timer set for new Level Begins
+			 */
 			timer.stop();
 			second =30;
 			minute =0;
@@ -113,9 +114,10 @@ public class GameGui extends JFrame implements ActionListener {
 	GameEngine myGame = null;
 	URL currentGame = null;
 	JTextArea infoArea = null;
-/**
-* set variables for the components(level and time)
-*/
+	
+	/**
+	 * set variables for the components(level and time)
+	 */
 	JLabel lbl_level = new JLabel("Level");
 	//Set timer to game
 	JLabel lbl_timer;
@@ -126,10 +128,10 @@ public class GameGui extends JFrame implements ActionListener {
 	DecimalFormat dFormat = new DecimalFormat("00");
 	
 	
-/**
- * Initializes the game. 
- * @param player
- */
+	/**
+	 * Initializes the game. 
+	 * @param player
+	 */
 	private void initGame(String player) {
 		
 		setBounds(100, 100, 1321, 768);
@@ -209,16 +211,16 @@ public class GameGui extends JFrame implements ActionListener {
 		getContentPane().add(panel);
 		panel.repaint();
 		panel.setVisible(true);
-/**
-* Button click events and action listener used 
-*/
+		
+		/**
+		 * Button click events and action listener used 
+		 */
 		JButton btnQuite = new JButton("QUIT");
 		btnQuite.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		btnQuite.addActionListener(new ActionListener() {
 			
 			
 			// Application closed
-			
 			public void actionPerformed(ActionEvent e) {
 				EndGameGui endgame =new EndGameGui();
 				endgame.setVisible(true);
@@ -227,9 +229,7 @@ public class GameGui extends JFrame implements ActionListener {
 				dispose();
 			} 
 		});
-			
-		
-		
+				
 		btnQuite.setBackground(new Color(255, 0, 0));
 		btnQuite.setForeground(new Color(255, 255, 255));
 		btnQuite.setFont(new Font("Nirmala UI", Font.BOLD, 15));
@@ -266,19 +266,19 @@ public class GameGui extends JFrame implements ActionListener {
 				lbl_exit.setForeground(Color.white);
 			}
 		});
-/**
-* when the time is zero the player will be redirect to the EndGame JFrame
-*/
 		
-		countdownTimer();
-		timer.start();		
+			/**
+		 	* when the time is zero the player will be redirect to the EndGame JFrame
+		 	*/
+			countdownTimer();
+			timer.start();		
 
-	}
-public void countdownTimer() {
+		}
+		public void countdownTimer() {
 	
-	// https://www.youtube.com/watch?v=zWw72j-EbqI ===== game timer
-	//https://www.ryisnow.online/2021/04/java-beginner-code-sample-create-timer.html
-		
+		// References
+		// https://www.youtube.com/watch?v=zWw72j-EbqI ===== game timer
+		//https://www.ryisnow.online/2021/04/java-beginner-code-sample-create-timer.html
 		timer = new Timer(1000, new ActionListener() {
 			
 			@Override
@@ -307,9 +307,9 @@ public void countdownTimer() {
 			}
 		});		
 	}
-/**
- * Default player is null. 
- */
+	/**
+	 * Default player is null. 
+	 */
 	public GameGui() {
 		super();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GameGui.class.getResource("/res/SignUpPage.jpg")));
@@ -320,7 +320,7 @@ public void countdownTimer() {
 	}
 
 	/**
-	 * Use this to start GUI, e.g., after login.
+	 * Use this to start GUI, after login.
 	 * 
 	 * @param player
 	 */
