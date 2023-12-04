@@ -29,6 +29,7 @@ public class EndGameGui extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JLabel lbl_username;
+	public JLabel lbl_score;
 
 	/**
 	 * Launch the application.
@@ -74,6 +75,13 @@ public class EndGameGui extends JFrame {
 				dispose();
 			}
 		});
+		
+		lbl_score = new JLabel("");
+		lbl_score.setForeground(new Color(255, 255, 255));
+		lbl_score.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_score.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 79));
+		lbl_score.setBounds(10, 440, 1301, 76);
+		contentPane.add(lbl_score);
 		
 		lbl_username = new JLabel("");
 		lbl_username.setBounds(1109, 692, 184, 45);

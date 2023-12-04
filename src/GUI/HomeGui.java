@@ -144,18 +144,18 @@ public class HomeGui extends JFrame {
 		lbl_opaque.setBounds(112, 242, 498, 159);
 		panel.add(lbl_opaque);
 		
-		JLabel lbl_ = new JLabel("Welcome");
+		JLabel lbl_ = new JLabel("WELCOME");
 		lbl_.setHorizontalTextPosition(SwingConstants.LEFT);
 		lbl_.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_.setForeground(Color.WHITE);
 		lbl_.setFont(new Font("Nirmala UI", Font.BOLD, 55));
-		lbl_.setBounds(112, 152, 252, 74);
+		lbl_.setBounds(112, 152, 290, 74);
 		panel.add(lbl_);
 		
 		lbl_username = new JLabel("");
 		lbl_username.setForeground(new Color(255, 255, 255));
 		lbl_username.setFont(new Font("Nirmala UI", Font.BOLD, 55));
-		lbl_username.setBounds(374, 152, 282, 74);
+		lbl_username.setBounds(402, 152, 895, 74);
 		panel.add(lbl_username);
 		panel.add(btn_quit);
 		
@@ -166,6 +166,7 @@ public class HomeGui extends JFrame {
 				ScoreBoardGui scoreBoard = new ScoreBoardGui();
 				scoreBoard.setVisible(true);
 				scoreBoard.lbl_username.setText(lbl_username.getText()); // label name set to scoreboard
+				scoreBoard.loadScoreTable(); // Load the score table
 				dispose();
 			}
 		});

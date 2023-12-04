@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.User;
 import repo.DatabaseConnection;
@@ -41,12 +43,18 @@ public class GameGui extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = -107785653906635L;
 	public JLabel lbl_username;
+	
+	// Add variables for incorrect answer tracking and score
+    private int incorrectAttempts = 0;
+    private int maxIncorrectAttempts = 3;
+    private int score = 0;
 
 	/**
 	 * Method that is called when a button has been pressed.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		int solution = Integer.parseInt(e.getActionCommand());
 		boolean correct = myGame.checkSolution(currentGame, solution);
 		int score = myGame.getScore(); 
@@ -72,28 +80,32 @@ public class GameGui extends JFrame implements ActionListener {
 			minute =0;
 			lbl_timer.setText("00:30");
 			countdownTimer();
-			timer.start();		
-			//else {
-			//System.out.println("INCORRECT ANSWER..!"); 
-			//infoArea.setText("ANSWER INCORRECT!! TRY AGAIN!  Score: "+score);
-			//}
+			timer.start();	
 			
 		}
 		else {
-	        // Game lose
-			EndGameGui endgame =new EndGameGui();
-			endgame.setVisible(true);
-			endgame.lbl_username.setText(lbl_username.getText());
-			timer.stop();
-			dispose();
+			 incorrectAttempts++;
 			
-			/**
-			 * score data pass to score controller
-			 */
-			String playerUsername  = lbl_username.getText();
-		    long playerScore  = myGame.getScore();
+			 if (incorrectAttempts >= maxIncorrectAttempts) {
+	                // Game over due to too many incorrect attempts
+	                EndGameGui endgame = new EndGameGui();
+	                endgame.setVisible(true);
+	                endgame.lbl_username.setText(lbl_username.getText());
+	                endgame.lbl_score.setText("YOUR SCORE: " + score);
+	                timer.stop();
+	                dispose();
 
-		    ScoreService.saveScore(playerUsername , playerScore );
+	                // Save the score
+	                String playerUsername = lbl_username.getText();
+	                int playerScore = score;
+	                ScoreService.saveScore(playerUsername, playerScore);
+	                
+	            } else {
+	            	 int remainingAttempts = maxIncorrectAttempts - incorrectAttempts;
+	                // Incorrect answer, but still have attempts left
+	                infoArea.setText("ANSWER INCORRECT!! ONLY " + remainingAttempts + " ATTEMPTS LEFT!!");
+	             
+	            }
 		}
 	}
 
@@ -119,6 +131,7 @@ public class GameGui extends JFrame implements ActionListener {
  * @param player
  */
 	private void initGame(String player) {
+		
 		setBounds(100, 100, 1321, 768);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -293,7 +306,7 @@ public void countdownTimer() {
 				
 			}
 		});		
-	}		
+	}
 /**
  * Default player is null. 
  */

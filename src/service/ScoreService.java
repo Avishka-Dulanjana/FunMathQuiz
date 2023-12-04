@@ -7,7 +7,7 @@ import java.sql.Statement;
 import repo.DatabaseConnection;
 
 public class ScoreService {
-	public static void saveScore(String username, long score) {
+	public static void saveScore(String username, int score) {
         try {
             Connection con = DatabaseConnection.createConnection();
             Statement stm = con.createStatement();

@@ -81,6 +81,7 @@ public class ScoreBoardGui extends JFrame {
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0), 7));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+		setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
 		panel.setIgnoreRepaint(true);
@@ -211,83 +212,54 @@ public class ScoreBoardGui extends JFrame {
         
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
-			new String[] {}
+			new String[] {"Player", "Score"}
 			) {
 	            @Override
 	            public boolean isCellEditable(int row, int column) {
 	                return false; // Make all cells non-editable
 	            }
 		
-		});
-		
-		JButton btn_score = new JButton("Score");
-		btn_score.setBackground(new Color(255, 128, 64));
-		btn_score.setForeground(new Color(255, 255, 255));
-		btn_score.setFont(new Font("Nirmala UI", Font.BOLD, 16));
-		btn_score.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btn_score.setBackground(new Color(255, 255, 123));
-				btn_score.setForeground(Color.black);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btn_score.setBackground(new Color(255, 128, 64));
-				btn_score.setForeground(Color.white);
-				
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				btn_score.setBackground(new Color(255, 128, 64));
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				btn_score.setBackground(new Color(255, 128, 64));
-			}
-		});
-		
-		btn_score.addActionListener(new ActionListener() {
-			/*
-			 * Score data retrive
-			 * */
-			
-			public void actionPerformed(ActionEvent e) {
-				if(!isScoreButtonClicked) {
-					try {
-						Connection con= DatabaseConnection.createConnection();
-						Statement stm =con.createStatement();
-						String sql = "WITH RankedScores AS ( SELECT game_id, score, ROW_NUMBER() OVER (PARTITION BY game_id ORDER BY score DESC) AS rn FROM score_table ) SELECT game_id, score FROM RankedScores WHERE rn = 1 ORDER BY score DESC LIMIT 15";
-						ResultSet rs = stm.executeQuery(sql);
-						ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
-						DefaultTableModel model = (DefaultTableModel) table.getModel();
-						
-						int cols = rsmd.getColumnCount();
-						String[] colName = new String[cols];
-						for(int i=0; i<cols; i++) 
-							colName[i] = rsmd.getColumnName(i+1);
-						model.setColumnIdentifiers(colName);
-						String player_name, marks;
-						while(rs.next()){
-							player_name = rs.getString(1);
-							marks = rs.getString(2);
-							String[] row = {player_name,marks};
-							model.addRow(row);
-						}
-						isScoreButtonClicked = true; // score button only click one time
-					}catch (Exception e1) {
-						System.out.println(e1.getMessage());
-					}
-				}
-				
-			}
-		});
-		btn_score.setBounds(938, 561, 188, 56);
-		panel.add(btn_score);
-		setLocationRelativeTo(null);	
+		});	
+	}
+	
+	/**
+	 * Score table function
+	 */
+	
+	public void loadScoreTable() {
+	    if (!isScoreButtonClicked) {
+	        try {
+	            Connection con = DatabaseConnection.createConnection();
+	            Statement stm = con.createStatement();
+	            String sql = "WITH RankedScores AS ( SELECT  game_id, score, ROW_NUMBER() OVER (PARTITION BY game_id ORDER BY score DESC) AS rn FROM score_table ) SELECT game_id, score FROM RankedScores WHERE rn = 1 ORDER BY score DESC;";
+	            ResultSet rs = stm.executeQuery(sql);
+	            ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+	            DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+	            int cols = rsmd.getColumnCount();
+	            String[] colName = new String[cols];
+	            for (int i = 0; i < cols; i++)
+	                colName[i] = rsmd.getColumnName(i + 1);
+	            model.setColumnIdentifiers(colName);
+	            String player_name, score;
+	            while (rs.next()) {
+	                player_name = rs.getString(1);
+	                score = rs.getString(2);
+	                String[] row = { player_name, score };
+	                model.addRow(row);
+	            }
+	            isScoreButtonClicked = true; // score button only click one time
+	        } catch (Exception e1) {
+	            System.out.println(e1.getMessage());
+	        }
+	    }
 	}
 
-	// TABEL NAMES SET UPPER CASE
-	
+	/**
+	 * Table name set to Upper Case
+	 * @author Avishka Dulanjana
+	 *
+	 */
 	
 	private static class UppercaseHeaderRenderer implements TableCellRenderer {
         private final JLabel label;
