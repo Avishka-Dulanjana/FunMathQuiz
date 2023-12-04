@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import GUI.LoginGui;
 import repo.DatabaseConnection;
-import view.Login;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -54,7 +54,7 @@ public class StarterScreen extends JFrame {
 				startScreen.setVisible(true);
 			}
 		});
-		Login login = new Login();
+		LoginGui login = new LoginGui();
 				try {
 					for(int i=0; i<=100; i++) {
 						Thread.sleep(40);
@@ -75,7 +75,7 @@ public class StarterScreen extends JFrame {
 	 * Create the frame.
 	 */
 	public StarterScreen() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/res/SignUpPage.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginGui.class.getResource("/res/SignUpPage.jpg")));
 //		contentPane.setVisible(true);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
