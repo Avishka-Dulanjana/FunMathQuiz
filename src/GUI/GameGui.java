@@ -301,6 +301,7 @@ public class GameGui extends JFrame implements ActionListener {
 					EndGameGui endgame =new EndGameGui();
 					endgame.setVisible(true);
 					endgame.lbl_username.setText(lbl_username.getText());
+					endgame.lbl_score.setText("YOUR SCORE: " + score);
 					dispose();
 				}
 				
@@ -318,6 +319,7 @@ public class GameGui extends JFrame implements ActionListener {
 		initGame(null);
 		setLocationRelativeTo(null);
 	}
+
 
 	/**
 	 * Use this to start GUI, after login.

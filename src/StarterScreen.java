@@ -1,3 +1,4 @@
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -5,10 +6,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import GUI.GameGui;
 import GUI.LoginGui;
+import controller.SoundManager;
 import repo.DatabaseConnection;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -16,6 +22,12 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import javax.swing.DropMode;
 import javax.swing.SwingConstants;
+//import javax.print.DocFlavor.URL;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BoxLayout;
 import java.awt.Font;
 import javax.swing.ImageIcon;
@@ -25,6 +37,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -45,6 +58,11 @@ public class StarterScreen extends JFrame {
 	private JPanel contentPane;
 	private JProgressBar progressBar;
 	private JLabel lbl_percentage;
+	private Clip backgroundMusic;
+	
+	public SoundManager soundManager;
+	
+	private static final String MUSIC_FILE_PATH = "E:\\2023 Learning\\University Bedfordshire Degree\\Lab Session\\Projects\\Fun_Math_Quiz\\Game_Song.wav";
 
 	/**
 	 * Launch the application.
@@ -75,7 +93,6 @@ public class StarterScreen extends JFrame {
 				new StarterScreen().setVisible(false);
 				login.setVisible(true);
 				startScreen.dispose();
-			
 		
 	}
 
@@ -137,6 +154,71 @@ public class StarterScreen extends JFrame {
 		// Set the location of the frame to the center of the screen
 		setLocationRelativeTo(null);
 		
-		
+		// Load and play background music
+        try {
+            backgroundMusic = loadBackgroundMusic(MUSIC_FILE_PATH);
+            if (backgroundMusic != null) {
+                backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
+
+
+	/**
+     * Load background music from the given file path.
+     *
+     * @param filePath The file path of the background music.
+     * @return A Clip object representing the loaded background music.
+     * @throws LineUnavailableException If a Line cannot be opened because it is unavailable.
+     * @throws IOException               If an I/O error occurs.
+     * @throws UnsupportedAudioFileException If the file does not point to valid audio file data recognized by the system.
+     */
+    private Clip loadBackgroundMusic(String filePath) throws Exception {
+        try {
+        	URL soundFile = getClass().getResource(filePath);
+        	AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath));
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            return clip;
+        }catch (Exception e) {
+            e.printStackTrace(); // Print the stack trace
+            throw e; // Rethrow the exception to signal the error
+        }
+    	
+    }
+    
+    // Add a method to change the background music
+    public void changeBackgroundMusic(String filePath) {
+        closeBackgroundMusic();
+        try {
+            backgroundMusic = loadBackgroundMusic(filePath);
+            if (backgroundMusic != null) {
+                backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Close the background music clip.
+     */
+    private void closeBackgroundMusic() {
+        if (backgroundMusic != null) {
+            backgroundMusic.close();
+        }
+    }
+
+    /**
+     * Override the dispose method to close the background music when the frame is disposed.
+     */
+    @Override
+    public void dispose() {
+        closeBackgroundMusic();
+        super.dispose();
+    }
 }

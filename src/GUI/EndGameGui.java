@@ -83,8 +83,8 @@ public class EndGameGui extends JFrame {
 		lbl_score = new JLabel("");
 		lbl_score.setForeground(new Color(255, 255, 255));
 		lbl_score.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_score.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 79));
-		lbl_score.setBounds(10, 440, 1301, 76);
+		lbl_score.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 18));
+		lbl_score.setBounds(1033, 163, 245, 33);
 		contentPane.add(lbl_score);
 		
 		 // Label to display the player's username
@@ -130,7 +130,7 @@ public class EndGameGui extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(EndGameGui.class.getResource("/res/gameover.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(EndGameGui.class.getResource("/res/GAME OVER (6).jpg")));
 		lblNewLabel.setBounds(10, 10, 1301, 748);
 		contentPane.add(lblNewLabel);
 		

@@ -119,12 +119,6 @@ public class ScoreBoardGui extends JFrame {
 		lbl_copy_right.setBounds(10, 712, 177, 32);
 		panel.add(lbl_copy_right);
 		
-		// Main picture label
-		JLabel lbl_main_Picture = new JLabel("");
-		lbl_main_Picture.setIcon(new ImageIcon(ScoreBoardGui.class.getResource("/res/LeaderBoard_image.jpg")));
-		lbl_main_Picture.setBounds(0, 0, 896, 754);
-		panel.add(lbl_main_Picture);
-		
 		// Button to navigate back to the game
 		JButton btn_back = new JButton("Click");
 		btn_back.addActionListener(new ActionListener() {
@@ -140,7 +134,7 @@ public class ScoreBoardGui extends JFrame {
 		btn_back.setBorder(null);
 		btn_back.setForeground(new Color(0, 0, 0));
 		btn_back.setFont(new Font("Nirmala UI", Font.BOLD, 16));
-		btn_back.setBounds(1111, 696, 131, 32);
+		btn_back.setBounds(579, 604, 131, 32);
 		panel.add(btn_back);
 		
 		// Exit label
@@ -169,36 +163,24 @@ public class ScoreBoardGui extends JFrame {
 		lbl_exit.setBounds(1262, 0, 45, 47);
 		panel.add(lbl_exit);
 		
-		JLabel lblLogin = new JLabel("Leader Board");
-		lblLogin.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogin.setForeground(Color.WHITE);
-		lblLogin.setFont(new Font("Nirmala UI", Font.BOLD, 50));
-		lblLogin.setBounds(936, 108, 314, 63);
-		panel.add(lblLogin);
-		
-		JLabel lblChanger = new JLabel("Welcome Master");
-		lblChanger.setHorizontalTextPosition(SwingConstants.LEFT);
-		lblChanger.setHorizontalAlignment(SwingConstants.LEFT);
-		lblChanger.setForeground(Color.WHITE);
-		lblChanger.setFont(new Font("Nirmala UI", Font.PLAIN, 30));
-		lblChanger.setBounds(936, 167, 238, 39);
-		panel.add(lblChanger);
-		
 		JLabel lbl_signup = new JLabel("Back to the game?");
 		lbl_signup.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_signup.setForeground(Color.WHITE);
-		lbl_signup.setFont(new Font("Nirmala UI", Font.PLAIN, 18));
-		lbl_signup.setBounds(947, 699, 154, 25);
+		lbl_signup.setFont(new Font("Nirmala UI", Font.BOLD, 22));
+		lbl_signup.setBounds(535, 558, 210, 37);
 		panel.add(lbl_signup);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBackground(new Color(255, 255, 255));
 		scrollPane.setFont(new Font("Nirmala UI", Font.BOLD, 30));
-		scrollPane.setBounds(938, 232, 332, 309);
+		scrollPane.setBounds(454, 238, 366, 294);
 		panel.add(scrollPane);
 		
 		table = new JTable();
 		table.setSize(new Dimension(1, 1));
+		
+		table.setBackground(new Color(0, 0, 102));
+		table.setForeground(Color.WHITE);
 		//table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setGridColor(new Color(0, 0, 0));
 		table.setSelectionForeground(new Color(255, 255, 255));
@@ -235,6 +217,12 @@ public class ScoreBoardGui extends JFrame {
 	            }
 		
 		});	
+		
+		// Main picture label
+		JLabel lbl_main_Picture = new JLabel("");
+		lbl_main_Picture.setIcon(new ImageIcon(ScoreBoardGui.class.getResource("/res/GAME OVER (5).jpg")));
+		lbl_main_Picture.setBounds(0, 0, 1307, 754);
+		panel.add(lbl_main_Picture);
 	}
 	
 	/**

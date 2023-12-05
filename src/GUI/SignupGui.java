@@ -78,8 +78,7 @@ public class SignupGui extends JFrame {
 	 */
 	public SignupGui() {
 		
-			setIconImage(Toolkit.getDefaultToolkit().getImage(SignupGui.class.getResource("/res/SignUpPage.jpg")));
-//			contentPane.setVisible(true);
+			setIconImage(Toolkit.getDefaultToolkit().getImage(SignupGui.class.getResource("/res/SignUp_Page.jpg")));
 			setUndecorated(true);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 1321, 768);
@@ -124,7 +123,7 @@ public class SignupGui extends JFrame {
 			
 			// Main picture
 			JLabel lbl_main_Picture = new JLabel("");
-			lbl_main_Picture.setIcon(new ImageIcon(SignupGui.class.getResource("/res/123.jpg")));
+			lbl_main_Picture.setIcon(new ImageIcon(SignupGui.class.getResource("/res/SignUpPage.jpg")));
 			lbl_main_Picture.setBounds(411, 0, 896, 754);
 			panel.add(lbl_main_Picture);
 			
