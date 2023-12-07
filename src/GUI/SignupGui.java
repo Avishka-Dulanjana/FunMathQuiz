@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -246,7 +246,7 @@ public class SignupGui extends JFrame {
 					}
 					else if(gameName.isEmpty() || gameName.equals("Enter Your Game Nickname"))
 					{
-						JOptionPane.showMessageDialog(null, "Nick Name cannot be blank");
+						JOptionPane.showMessageDialog(null, "Gamer Id cannot be blank");
 					}
 					else if(email.isEmpty() || email.equals("Enter Your Email Address"))
 					{
@@ -362,10 +362,12 @@ public class SignupGui extends JFrame {
 //			});
 			
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				
+		
 			
+			// Create a JButton for signing up with associated styling and event handling
 			btn_signup.setForeground(new Color(255, 255, 255));
 			btn_signup.addMouseListener(new MouseAdapter() {
+				// Set button background and foreground colors on mouse hover, press, and release
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					btn_signup.setBackground(new Color(255, 255, 123));
@@ -394,6 +396,7 @@ public class SignupGui extends JFrame {
 			btn_signup.setBounds(32, 537, 340, 56);
 			panel.add(btn_signup);
 			
+			// Create a JLabel asking if the user has an account
 			JLabel lbl_signup = new JLabel("Do have an account?");
 			lbl_signup.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_signup.setForeground(Color.WHITE);
@@ -401,6 +404,7 @@ public class SignupGui extends JFrame {
 			lbl_signup.setBounds(112, 616, 190, 25);
 			panel.add(lbl_signup);
 			
+			// Create a JButton for navigating to the login page
 			JButton btn_login = new JButton("Login");
 			btn_login.addActionListener(new ActionListener() {
 				/**
@@ -419,12 +423,14 @@ public class SignupGui extends JFrame {
 			btn_login.setBounds(131, 658, 148, 32);
 			panel.add(btn_login);
 			
+			// Create a JLabel for copyright information
 			JLabel lbl_email_1_1_1 = new JLabel("Copyright@Robotz game");
 			lbl_email_1_1_1.setForeground(Color.WHITE);
 			lbl_email_1_1_1.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
 			lbl_email_1_1_1.setBounds(125, 722, 177, 32);
 			panel.add(lbl_email_1_1_1);
 			
+			// Create JLabels with motivational messages
 			JLabel lblToUnleash = new JLabel("to unleash");
 			lblToUnleash.setHorizontalTextPosition(SwingConstants.LEFT);
 			lblToUnleash.setHorizontalAlignment(SwingConstants.LEFT);
@@ -441,12 +447,14 @@ public class SignupGui extends JFrame {
 			lblTheGamerWithin.setBounds(31, 106, 330, 39);
 			panel.add(lblTheGamerWithin);
 			
+			// Create JLabels and JTextFields for user information input
 			JLabel lbl_gamer_id = new JLabel("Gamer Id");
 			lbl_gamer_id.setForeground(Color.WHITE);
 			lbl_gamer_id.setFont(new Font("Nirmala UI", Font.BOLD, 20));
 			lbl_gamer_id.setBounds(32, 251, 158, 25);
 			panel.add(lbl_gamer_id);
 			
+			// Create a JTextField for entering the game nickname
 			txt_game_name = new JTextField();
 			txt_game_name.setText("Enter Your Game Nickname");
 			txt_game_name.setForeground(Color.WHITE);
@@ -458,6 +466,7 @@ public class SignupGui extends JFrame {
 			txt_game_name.setBackground(new Color(255, 155, 80));
 			txt_game_name.setBounds(32, 286, 340, 39);
 			panel.add(txt_game_name);
+			// Add focus listeners to handle text field behavior on focus
 			txt_game_name.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusGained(FocusEvent e) {
@@ -474,13 +483,14 @@ public class SignupGui extends JFrame {
 					}
 				}
 			});
-			
+			// Create JLabel for email information
 			JLabel lbl_email = new JLabel("Email");
 			lbl_email.setForeground(Color.WHITE);
 			lbl_email.setFont(new Font("Nirmala UI", Font.BOLD, 20));
 			lbl_email.setBounds(32, 335, 158, 25);
 			panel.add(lbl_email);
 			
+			// Create a JTextField for entering the email address
 			txt_email = new JTextField();
 			txt_email.setText("Enter Your Email Address");
 			txt_email.setForeground(Color.WHITE);
@@ -492,6 +502,7 @@ public class SignupGui extends JFrame {
 			txt_email.setBackground(new Color(255, 155, 80));
 			txt_email.setBounds(32, 370, 340, 39);
 			
+			// Add focus listeners to handle text field behavior on focus
 			txt_email.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusGained(FocusEvent e) {
@@ -510,8 +521,7 @@ public class SignupGui extends JFrame {
 			});
 			
 			panel.add(txt_email);
-			setLocationRelativeTo(null);
-			
+			setLocationRelativeTo(null); // Set the location of the frame to the center of the screen
 			
 		}
 }

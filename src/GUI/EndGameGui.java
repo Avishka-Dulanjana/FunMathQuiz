@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.EventQueue;
 
@@ -76,6 +76,29 @@ public class EndGameGui extends JFrame {
 				home.lbl_username.setText(lbl_username.getText());
 				home.setVisible(true);
 				dispose();
+			}
+		});
+		
+		// Mouse hover effects
+		btn_play_again.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btn_play_again.setBackground(new Color(255, 255, 123));
+				btn_play_again.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btn_play_again.setBackground(new Color(198, 61, 47));
+				btn_play_again.setForeground(Color.white);
+				
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				btn_play_again.setBackground(new Color(198, 61, 47));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				btn_play_again.setBackground(new Color(198, 61, 47));
 			}
 		});
 		

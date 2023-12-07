@@ -6,9 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import GUI.GameGui;
-import GUI.LoginGui;
 import controller.SoundManager;
+import gui.GameGui;
+import gui.LoginGui;
 import repo.DatabaseConnection;
 
 import java.awt.Color;

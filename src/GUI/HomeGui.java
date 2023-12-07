@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -34,7 +34,7 @@ import repo.DatabaseConnection;
 import javax.swing.JTextArea;
 import javax.swing.border.MatteBorder;
 
-import GUI.GameGui;
+import gui.GameGui;
 
 /**
  * The main graphical user interface for the home screen of the Math IQ Game.
@@ -127,6 +127,7 @@ public class HomeGui extends JFrame {
 			}
 		});
 		
+		// Create a JTextArea to display a welcome message with specific formatting
 		JTextArea txtrunlockYourInner = new JTextArea();
 		txtrunlockYourInner.setOpaque(false);
 		txtrunlockYourInner.setLineWrap(true);
@@ -142,12 +143,14 @@ public class HomeGui extends JFrame {
 		panel.add(txtrunlockYourInner);
 		txtrunlockYourInner.setBackground(new Color(0, 0, 0));
 		
+		// Create an opaque JLabel to act as a background for the JTextArea
 		JLabel lbl_opaque = new JLabel("");
 		lbl_opaque.setBackground(new Color(0, 0, 0));
 		lbl_opaque.setOpaque(true);
 		lbl_opaque.setBounds(112, 242, 498, 159);
 		panel.add(lbl_opaque);
 		
+		// Create a JLabel to display the title "WELCOME"
 		JLabel lbl_ = new JLabel("WELCOME");
 		lbl_.setHorizontalTextPosition(SwingConstants.LEFT);
 		lbl_.setHorizontalAlignment(SwingConstants.LEFT);
@@ -156,7 +159,7 @@ public class HomeGui extends JFrame {
 		lbl_.setBounds(112, 152, 290, 74);
 		panel.add(lbl_);
 		
-		// User's username label
+		// Create a JLabel to display the user's username
 		lbl_username = new JLabel("");
 		lbl_username.setForeground(new Color(255, 255, 255));
 		lbl_username.setFont(new Font("Nirmala UI", Font.BOLD, 55));
@@ -164,9 +167,10 @@ public class HomeGui extends JFrame {
 		panel.add(lbl_username);
 		panel.add(btn_quit);
 		
-		// Scoreboard button
+		// Create a JButton for accessing the scoreboard
 		JButton btn_scoreboard = new JButton("SCORE");
 		btn_scoreboard.addActionListener(new ActionListener() {
+			// Open ScoreBoardGui on button click
 			public void actionPerformed(ActionEvent e) {
 				ScoreBoardGui scoreBoard = new ScoreBoardGui();
 				scoreBoard.setVisible(true);
@@ -189,7 +193,7 @@ public class HomeGui extends JFrame {
 		Color transparentColor = new Color(0, 0, 0, 0);
 		panel.add(lbl_exit);
 		
-		// Start button
+		// Create a JButton to start the game
 		JButton btn_start = new JButton("START");
 		btn_start.setForeground(new Color(255, 255, 255));
 		
@@ -248,7 +252,7 @@ public class HomeGui extends JFrame {
 				btn_scoreboard.setBackground(new Color(255, 128, 64));
 			}
 		});
-		
+		// Add styling for button on mouse hover
 		btn_quit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -277,12 +281,14 @@ public class HomeGui extends JFrame {
 		btn_start.setBounds(112, 422, 340, 56);
 		panel.add(btn_start);
 		
+		// Create a JLabel for the copyright information
 		JLabel lbl_email_1_1_1 = new JLabel("Copyright@Robotz game");
 		lbl_email_1_1_1.setForeground(Color.WHITE);
 		lbl_email_1_1_1.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
 		lbl_email_1_1_1.setBounds(1098, 712, 177, 32);
 		panel.add(lbl_email_1_1_1);
 		
+		// Create a JLabel for the main background picture
 		JLabel lbl_main_Picture = new JLabel("");
 		lbl_main_Picture.setForeground(new Color(255, 255, 255));
 		lbl_main_Picture.setIcon(new ImageIcon(HomeGui.class.getResource("/res/Untitled design.jpg")));

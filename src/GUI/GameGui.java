@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -129,34 +129,51 @@ public class GameGui extends JFrame implements ActionListener {
 	
 	
 	/**
-	 * Initializes the game. 
-	 * @param player
+	 * Initializes the game GUI with the specified player.
+	 * Sets up the game window, layout, and components including timer, information area, question area,
+	 * and answer buttons. Initializes the GameEngine with the provided player and starts the first game.
+	 *
+	 * @param player The name of the player.
+	 *
+	 * @see javax.swing.JFrame
+	 * @see java.awt.Color
+	 * @see javax.swing.JPanel
+	 * @see javax.swing.JLabel
+	 * @see java.awt.Font
+	 * @see javax.swing.JTextArea
+	 * @see javax.swing.JScrollPane
+	 * @see javax.swing.ImageIcon
+	 * @see javax.swing.JButton
+	 * @see GameEngine
 	 */
 	private void initGame(String player) {
 		
+		// Set frame properties
 		setBounds(100, 100, 1321, 768);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
-		
+		// Create and configure the main panel
 		JPanel panel = new JPanel();
 		panel.setBounds(337, 152, 700, 549);
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 
+		// Initialize the GameEngine with the player
 		myGame = new GameEngine(player);
 		currentGame = myGame.nextGame();
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 				
+				// Create and configure the timer label
 				lbl_timer = new JLabel("");
 				lbl_timer.setForeground(new Color(255, 0, 0));
 				lbl_timer.setHorizontalAlignment(JLabel.CENTER);
 				lbl_timer.setFont(font1);
 				panel.add(lbl_timer);
-				
 				lbl_timer.setText("00:30");
 		
+				// Create and configure the information area
 				infoArea = new JTextArea(1, 40);
 				infoArea.setAlignmentY(Component.CENTER_ALIGNMENT);
 				infoArea.setForeground(new Color(138, 43, 226));
@@ -166,13 +183,12 @@ public class GameGui extends JFrame implements ActionListener {
 				infoArea.setEditable(false);
 				infoArea.setText("WHAT IS THE CORRECT ANSWER?  SCORE: 0");
 		
-		JScrollPane infoPane = new JScrollPane();
-		panel.add(infoPane);
-
-		ImageIcon ii = new ImageIcon(currentGame);
-		questArea = new JLabel(ii);
-	    questArea.setSize(330, 600);
-	    
+				// Create and configure the question area with scrolling
+				JScrollPane infoPane = new JScrollPane();
+				panel.add(infoPane);
+				ImageIcon ii = new ImageIcon(currentGame);
+				questArea = new JLabel(ii);
+				questArea.setSize(330, 600);
 	    
 	  		JScrollPane questPane = new JScrollPane(questArea);
 	  		panel.add(questPane);
@@ -182,8 +198,7 @@ public class GameGui extends JFrame implements ActionListener {
 	  		lbl_level.setFont(new Font("Nirmala UI", Font.BOLD, 25));
 	  		lbl_level.setText("Level: 1");
 	    
-		
-
+	  	// Create and configure answer buttons
 		for (int i = 0; i < 10; i++) {
 			JButton btn = new JButton(String.valueOf(i));
 			panel.add(btn);
@@ -274,12 +289,27 @@ public class GameGui extends JFrame implements ActionListener {
 			timer.start();		
 
 		}
-		public void countdownTimer() {
 	
-		// References
-		// https://www.youtube.com/watch?v=zWw72j-EbqI ===== game timer
-		//https://www.ryisnow.online/2021/04/java-beginner-code-sample-create-timer.html
-		timer = new Timer(1000, new ActionListener() {
+	/**
+	 * Initiates a countdown timer for the game.
+	 * The timer decrements seconds and minutes, updates the timer label, and handles
+	 * specific actions when the timer reaches zero. It stops the timer and initiates the
+	 * transition to the EndGameGui, displaying the user's score and username.
+	 *
+	 * <p>
+	 * References:
+	 * - YouTube tutorial: https://www.youtube.com/watch?v=zWw72j-EbqI (game timer)
+	 * - Online resource: https://www.ryisnow.online/2021/04/java-beginner-code-sample-create-timer.html
+	 * </p>
+	 *
+	 * @see javax.swing.Timer
+	 * @see java.awt.event.ActionListener
+	 * @see java.awt.event.ActionEvent
+	 * @see java.text.DecimalFormat
+	 */
+		public void countdownTimer() {
+			
+			timer = new Timer(1000, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.EventQueue;
 
@@ -211,11 +211,10 @@ public class LoginGui extends JFrame {
 		});
 		btn_login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				/**
 				 * Entered Data passing to the controller
 				 */
-				
-				
 				try {
 		            String email = txt_email.getText();
 		            String password = txt_password.getText();

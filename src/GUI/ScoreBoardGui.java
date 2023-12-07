@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -181,7 +181,6 @@ public class ScoreBoardGui extends JFrame {
 		
 		table.setBackground(new Color(0, 0, 102));
 		table.setForeground(Color.WHITE);
-		//table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setGridColor(new Color(0, 0, 0));
 		table.setSelectionForeground(new Color(255, 255, 255));
 		scrollPane.setViewportView(table);
@@ -191,7 +190,6 @@ public class ScoreBoardGui extends JFrame {
 		table.setIntercellSpacing(new Dimension(0, 0));
 		table.setRowHeight(30);
 		table.setFont(new Font("Nirmala UI", Font.BOLD, 17));
-		//table.setGridColor(new Color(0, 0, 0));
 		table.setShowGrid(true);
 		table.setGridColor(new Color(0, 0, 0));
 		
@@ -206,11 +204,27 @@ public class ScoreBoardGui extends JFrame {
         header.setBackground(new Color(200, 200, 200));
         header.setDefaultRenderer(new UppercaseHeaderRenderer()); // Score table header uppercase
         
-        
+        /**
+         * Sets the data model for a JTable with default rendering and editing behavior.
+         * The table is initialized with an empty data array and column headers.
+         *
+         * @param table The JTable for which the data model is being set.
+         * @param columnHeaders An array of column header names for the table.
+         * @see javax.swing.JTable
+         * @see javax.swing.table.DefaultTableModel
+         */
 		table.setModel(new DefaultTableModel(
 			new Object[][] {},
 			new String[] {"Player", "Score"}
 			) {
+			
+			/**
+		     * Returns whether a cell at the specified position is editable.
+		     *
+		     * @param row The row index of the cell.
+		     * @param column The column index of the cell.
+		     * @return {@code false} to make all cells non-editable.
+		     */
 	            @Override
 	            public boolean isCellEditable(int row, int column) {
 	                return false; // Make all cells non-editable
@@ -226,23 +240,42 @@ public class ScoreBoardGui extends JFrame {
 	}
 	
 	/**
-	 * Score table function
+	 * Loads and displays the score table in a JTable component. The scores are retrieved
+	 * from the database, and only one instance of loading is allowed by tracking whether
+	 * the score button has been clicked.
+	 *
+	 * <p>
+	 * This method fetches the player names and scores from the database, ranks them based on
+	 * the highest score for each game, and displays the result in the JTable.
+	 * </p>
+	 *
+	 * @throws Exception If an error occurs while querying the database or updating the table.
+	 * @see java.sql.Connection
+	 * @see java.sql.Statement
+	 * @see java.sql.ResultSet
+	 * @see javax.swing.JTable
+	 * @see javax.swing.table.DefaultTableModel
 	 */
 	public void loadScoreTable() {
 	    if (!isScoreButtonClicked) {
 	        try {
+	        	// Establish a database connection
 	            Connection con = DatabaseConnection.createConnection();
 	            Statement stm = con.createStatement();
+	            // SQL query to rank scores and select the top scores for each game
 	            String sql = "WITH RankedScores AS ( SELECT  game_id, score, ROW_NUMBER() OVER (PARTITION BY game_id ORDER BY score DESC) AS rn FROM score_table ) SELECT game_id, score FROM RankedScores WHERE rn = 1 ORDER BY score DESC;";
 	            ResultSet rs = stm.executeQuery(sql);
 	            ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
 	            DefaultTableModel model = (DefaultTableModel) table.getModel();
 
+	            // Set column headers based on the database metadata
 	            int cols = rsmd.getColumnCount();
 	            String[] colName = new String[cols];
 	            for (int i = 0; i < cols; i++)
 	                colName[i] = rsmd.getColumnName(i + 1);
 	            model.setColumnIdentifiers(colName);
+	            
+	            // Populate the table with player names and scores
 	            String player_name, score;
 	            while (rs.next()) {
 	                player_name = rs.getString(1);
